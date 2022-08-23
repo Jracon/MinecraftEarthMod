@@ -1,0 +1,22 @@
+package com.jracon.mcearth.datagen;
+
+import com.jracon.mcearth.MCEarth;
+import com.jracon.mcearth.setup.Registration;
+import net.minecraft.data.DataGenerator;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.client.model.generators.ItemModelProvider;
+import net.minecraftforge.common.data.ExistingFileHelper;
+
+public class MCEItemModels extends ItemModelProvider {
+
+    public MCEItemModels(DataGenerator generator, ExistingFileHelper existingFileHelper) {
+        super(generator, MCEarth.MOD_ID, existingFileHelper);
+    }
+
+    @Override
+    protected void registerModels() {
+        withExistingParent(Registration.MOOBLOOM_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+        singleTexture(Registration.BUTTERCUP.getId().getPath(), mcLoc("item/generated"), "layer0", modLoc("block/buttercup"));
+        singleTexture(Registration.MUD_BUCKET.getId().getPath(), mcLoc("item/generated"), "layer0", modLoc("item/mud_bucket"));
+    }
+}
