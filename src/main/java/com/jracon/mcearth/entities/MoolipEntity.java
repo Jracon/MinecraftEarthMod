@@ -34,10 +34,10 @@ import net.minecraftforge.common.IForgeShearable;
 
 import javax.annotation.Nullable;
 
-public class MoobloomEntity extends Cow implements IForgeShearable {
-    private static final EntityDataAccessor<String> DATA_TYPE = SynchedEntityData.defineId(MoobloomEntity.class, EntityDataSerializers.STRING);
+public class MoolipEntity extends Cow implements IForgeShearable {
+    private static final EntityDataAccessor<String> DATA_TYPE = SynchedEntityData.defineId(MoolipEntity.class, EntityDataSerializers.STRING);
 
-    public MoobloomEntity(EntityType<? extends MoobloomEntity> pEntityType, Level pLevel) {
+    public MoolipEntity(EntityType<? extends MoolipEntity> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
     }
 
@@ -45,13 +45,13 @@ public class MoobloomEntity extends Cow implements IForgeShearable {
         return pLevel.getBlockState(pPos.below()).is(Blocks.GRASS) ? 10.0F : pLevel.getPathfindingCostFromLightLevels(pPos);
     }
 
-    public static boolean checkFlowerSpawnRules(EntityType<MoobloomEntity> pMoobloomEntity, LevelAccessor pLevle, MobSpawnType pSpawnType, BlockPos pPos, RandomSource pRandomSource) {
+    public static boolean checkFlowerSpawnRules(EntityType<MoolipEntity> pMoolipEntity, LevelAccessor pLevle, MobSpawnType pSpawnType, BlockPos pPos, RandomSource pRandomSource) {
         return pLevle.getBlockState(pPos.below()).is(BlockTags.ANIMALS_SPAWNABLE_ON) && isBrightEnoughToSpawn(pLevle, pPos);
     }
 
     protected void defineSynchedData() {
         super.defineSynchedData();
-        this.entityData.define(DATA_TYPE, FlowerType.BUTTERCUP.type);
+        this.entityData.define(DATA_TYPE, FlowerType.PINK_DAISY.type);
     }
 
     @Override
@@ -106,20 +106,20 @@ public class MoobloomEntity extends Cow implements IForgeShearable {
 
     public void readAdditionalSaveData(CompoundTag pCompound) {
         super.readAdditionalSaveData(pCompound);
-        this.setFlowerType(MoobloomEntity.FlowerType.byType(pCompound.getString("Type")));
+        this.setFlowerType(MoolipEntity.FlowerType.byType(pCompound.getString("Type")));
     }
 
-    private void setFlowerType(MoobloomEntity.FlowerType pType) {
+    private void setFlowerType(MoolipEntity.FlowerType pType) {
         this.entityData.set(DATA_TYPE, pType.type);
     }
 
-    public MoobloomEntity.FlowerType getFlowerType() {
-        return MoobloomEntity.FlowerType.byType(this.entityData.get(DATA_TYPE));
+    public MoolipEntity.FlowerType getFlowerType() {
+        return MoolipEntity.FlowerType.byType(this.entityData.get(DATA_TYPE));
     }
 
     @Nullable
     @Override
-    public MoobloomEntity getBreedOffspring(ServerLevel pLevel, AgeableMob pOtherParent) {
+    public MoolipEntity getBreedOffspring(ServerLevel pLevel, AgeableMob pOtherParent) {
         return null;
     }
 
@@ -129,7 +129,7 @@ public class MoobloomEntity extends Cow implements IForgeShearable {
     }
 
     public enum FlowerType {
-        BUTTERCUP("buttercup", Registration.BUTTERCUP.get().defaultBlockState());
+        PINK_DAISY("pink_daisy", Registration.PINK_DAISY.get().defaultBlockState());
 
         final String type;
         final BlockState blockState;
@@ -143,14 +143,14 @@ public class MoobloomEntity extends Cow implements IForgeShearable {
             return this.blockState;
         }
 
-        static MoobloomEntity.FlowerType byType(String pName) {
-            for (MoobloomEntity.FlowerType MoobloomEntity$FlowerType : values()) {
-                if (MoobloomEntity$FlowerType.type.equals(pName)) {
-                    return MoobloomEntity$FlowerType;
+        static MoolipEntity.FlowerType byType(String pName) {
+            for (MoolipEntity.FlowerType MoolipEntity$FlowerType : values()) {
+                if (MoolipEntity$FlowerType.type.equals(pName)) {
+                    return MoolipEntity$FlowerType;
                 }
             }
 
-            return BUTTERCUP;
+            return PINK_DAISY;
         }
     }
     public static AttributeSupplier.Builder prepareAttributes() {

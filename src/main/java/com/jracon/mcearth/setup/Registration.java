@@ -12,7 +12,6 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.Fluid;
-import net.minecraft.world.level.material.Material;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fluids.FluidType;
@@ -44,8 +43,14 @@ public class Registration {
         FLUID_TYPES.register(bus);
     }
 
-    public static final RegistryObject<FlowerBlock> BUTTERCUP = registerBlock("buttercup", () -> new FlowerBlock(MobEffects.DIG_SPEED,  300, BlockBehaviour.Properties.copy(Blocks.DANDELION)), ModSetup.ITEM_GROUP);
-    public static final RegistryObject<FlowerPotBlock> BUTTERCUP_POT = BLOCKS.register("buttercup_pot", () -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, Registration.BUTTERCUP, BlockBehaviour.Properties.copy(Blocks.FLOWER_POT)));
+    public static final RegistryObject<FlowerBlock> BUTTERCUP = registerBlock("buttercup", () ->
+            new FlowerBlock(MobEffects.LUCK,  1, BlockBehaviour.Properties.copy(Blocks.DANDELION)), ModSetup.ITEM_GROUP);
+    public static final RegistryObject<FlowerPotBlock> BUTTERCUP_POT = BLOCKS.register("buttercup_pot", () ->
+            new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, Registration.BUTTERCUP, BlockBehaviour.Properties.copy(Blocks.FLOWER_POT)));
+    public static final RegistryObject<FlowerBlock> PINK_DAISY = registerBlock("pink_daisy", () ->
+            new FlowerBlock(MobEffects.LUCK, 1, BlockBehaviour.Properties.copy(Blocks.DANDELION)), ModSetup.ITEM_GROUP);
+    public static final RegistryObject<FlowerPotBlock> PINK_DAISY_POT = BLOCKS.register("pink_daisy_pot", () ->
+            new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, Registration.PINK_DAISY, BlockBehaviour.Properties.copy(Blocks.FLOWER_POT)));
 
     public static final ResourceLocation MUD_STILL_RL = new ResourceLocation(MCEarth.MOD_ID, "block/mud_still");
     public static final ResourceLocation MUD_FLOWING_RL = new ResourceLocation(MCEarth.MOD_ID, "block/mud_flow");
@@ -69,7 +74,6 @@ public class Registration {
             .slopeFindDistance(0).levelDecreasePerBlock(4).block(Registration.MUD_FLUID_BLOCK)
             .bucket(Registration.MUD_BUCKET).explosionResistance(50);
 
-
     private static RegistryObject<FluidType> register(String name, FluidType.Properties properties) {
         return FLUID_TYPES.register(name, () -> new BaseFluidType(MUD_STILL_RL, MUD_FLOWING_RL, MUD_OVERLAY_RL, properties));
     }
@@ -86,9 +90,14 @@ public class Registration {
     }
 
     public static final RegistryObject<EntityType<MoobloomEntity>> MOOBLOOM = ENTITIES.register("moobloom", () -> EntityType.Builder.of(MoobloomEntity::new, MobCategory.CREATURE)
-            .sized(1.4f, 0.9f)
+            .sized(0.9f, 1.4f)
             .setShouldReceiveVelocityUpdates(false)
             .build("moobloom"));
+    public static final RegistryObject<EntityType<MoolipEntity>> MOOLIP = ENTITIES.register("moolip", () -> EntityType.Builder.of(MoolipEntity::new, MobCategory.CREATURE)
+            .sized(0.9f, 1.4f)
+            .setShouldReceiveVelocityUpdates(false)
+            .build("moolip"));
 
     public static final RegistryObject<Item> MOOBLOOM_SPAWN_EGG = ITEMS.register("moobloom_spawn_egg", () -> new ForgeSpawnEggItem(MOOBLOOM, 0xffd600, 0xfaf7dc, new Item.Properties().tab(ModSetup.ITEM_GROUP)));
+    public static final RegistryObject<Item> MOOLIP_SPAWN_EGG = ITEMS.register("moolip_spawn_egg", () -> new ForgeSpawnEggItem(MOOLIP, 0xdb307b, 0x7a3653, new Item.Properties().tab(ModSetup.ITEM_GROUP)));
 }

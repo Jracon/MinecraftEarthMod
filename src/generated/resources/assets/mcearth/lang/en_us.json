@@ -1,8 +1,12 @@
 {
   "block.mcearth.buttercup": "Buttercup",
   "block.mcearth.buttercup_pot": "Potted Buttercup",
+  "block.mcearth.pink_daisy": "Pink Daisy",
+  "block.mcearth.pink_daisy_pot": "Potted Pink Daisy",
   "entity.mcearth.moobloom": "Moobloom",
+  "entity.mcearth.moolip": "Moolip",
   "item.mcearth.moobloom_spawn_egg": "Moobloom Spawn Egg",
+  "item.mcearth.moolip_spawn_egg": "Moolip Spawn Egg",
   "item.mcearth.mud_bucket": "Bucket of Mud",
   "itemGroup.Minecraft Earth": "MCEarth"
 }
