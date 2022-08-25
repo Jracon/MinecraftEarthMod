@@ -1,10 +1,13 @@
 package com.jracon.mcearth.setup;
 
-import com.jracon.mcearth.MCEarth;
-import com.jracon.mcearth.entities.MoobloomModel;
-import com.jracon.mcearth.entities.MoobloomRenderer;
-import com.jracon.mcearth.entities.MoolipModel;
-import com.jracon.mcearth.entities.MoolipRenderer;
+import com.jracon.mcearth.entities.chickens.CluckshroomModel;
+import com.jracon.mcearth.entities.chickens.CluckshroomRenderer;
+import com.jracon.mcearth.entities.cows.flowercows.MoobloomModel;
+import com.jracon.mcearth.entities.cows.flowercows.MoobloomRenderer;
+import com.jracon.mcearth.entities.cows.flowercows.MoolipModel;
+import com.jracon.mcearth.entities.cows.flowercows.MoolipRenderer;
+import com.jracon.mcearth.entities.pigs.MuddyPigModel;
+import com.jracon.mcearth.entities.pigs.MuddyPigRenderer;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraftforge.api.distmarker.Dist;
@@ -26,15 +29,20 @@ public class ClientSetup {
         ItemBlockRenderTypes.setRenderLayer(Registration.SOURCE_MUD_FLUID.get(), RenderType.translucent());
         ItemBlockRenderTypes.setRenderLayer(Registration.FLOWING_MUD_FLUID.get(), RenderType.translucent());
     }
+
     @SubscribeEvent
     public static void onRegisterLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(MoobloomModel.LAYER_LOCATION, MoobloomModel::createBodyLayer);
         event.registerLayerDefinition(MoolipModel.LAYER_LOCATION, MoolipModel::createBodyLayer);
+        event.registerLayerDefinition(CluckshroomModel.LAYER_LOCATION, CluckshroomModel::createBodyLayer);
+        event.registerLayerDefinition(MuddyPigModel.LAYER_LOCATION, MuddyPigModel::createBodyLayer);
     }
 
     @SubscribeEvent
     public static void onRegisterRenderer(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(Registration.MOOBLOOM.get(), MoobloomRenderer::new);
         event.registerEntityRenderer(Registration.MOOLIP.get(), MoolipRenderer::new);
+        event.registerEntityRenderer(Registration.CLUCKSHROOM.get(), CluckshroomRenderer::new);
+        event.registerEntityRenderer(Registration.MUDDY_PIG.get(), MuddyPigRenderer::new);
     }
 }

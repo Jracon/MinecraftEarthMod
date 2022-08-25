@@ -3,10 +3,14 @@
   "block.mcearth.buttercup_pot": "Potted Buttercup",
   "block.mcearth.pink_daisy": "Pink Daisy",
   "block.mcearth.pink_daisy_pot": "Potted Pink Daisy",
+  "entity.mcearth.cluckshroom": "Cluckshroom",
   "entity.mcearth.moobloom": "Moobloom",
   "entity.mcearth.moolip": "Moolip",
+  "entity.mcearth.muddy_pig": "Muddy Pig",
+  "item.mcearth.cluckshroom_spawn_egg": "Cluckshroom Spawn Egg",
   "item.mcearth.moobloom_spawn_egg": "Moobloom Spawn Egg",
   "item.mcearth.moolip_spawn_egg": "Moolip Spawn Egg",
   "item.mcearth.mud_bucket": "Bucket of Mud",
+  "item.mcearth.muddy_pig_spawn_egg": "Muddy Pig Spawn Egg",
   "itemGroup.Minecraft Earth": "MCEarth"
 }

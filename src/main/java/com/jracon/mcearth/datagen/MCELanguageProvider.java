@@ -25,8 +25,12 @@ public class MCELanguageProvider extends LanguageProvider {
         add(Registration.MUD_BUCKET.get(), "Bucket of Mud");
         add(Registration.MOOBLOOM_SPAWN_EGG.get(), "Moobloom Spawn Egg");
         add(Registration.MOOLIP_SPAWN_EGG.get(), "Moolip Spawn Egg");
+        add(Registration.CLUCKSHROOM_SPAWN_EGG.get(), "Cluckshroom Spawn Egg");
+        add(Registration.MUDDY_PIG_SPAWN_EGG.get(), "Muddy Pig Spawn Egg");
 
         add(Registration.MOOBLOOM.get(), "Moobloom");
         add(Registration.MOOLIP.get(), "Moolip");
+        add(Registration.CLUCKSHROOM.get(), "Cluckshroom");
+        add(Registration.MUDDY_PIG.get(), "Muddy Pig");
     }
 }

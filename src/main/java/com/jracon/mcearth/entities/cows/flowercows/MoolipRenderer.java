@@ -1,4 +1,4 @@
-package com.jracon.mcearth.entities;
+package com.jracon.mcearth.entities.cows.flowercows;
 
 import com.jracon.mcearth.MCEarth;
 import net.minecraft.client.renderer.entity.*;
@@ -12,7 +12,7 @@ public class MoolipRenderer extends MobRenderer<MoolipEntity, MoolipModel<Moolip
     private static final ResourceLocation TEXTURE = new ResourceLocation(MCEarth.MOD_ID, "textures/entity/moolip.png");
 
     public MoolipRenderer(EntityRendererProvider.Context context) {
-        super(context, new MoolipModel(context.bakeLayer(MoolipModel.LAYER_LOCATION)), 1f);
+        super(context, new MoolipModel(context.bakeLayer(MoolipModel.LAYER_LOCATION)), 0.7f);
     }
 
     @Nonnull

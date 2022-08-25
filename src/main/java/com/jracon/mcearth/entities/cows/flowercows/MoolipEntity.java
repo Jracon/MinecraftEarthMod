@@ -1,4 +1,4 @@
-package com.jracon.mcearth.entities;
+package com.jracon.mcearth.entities.cows.flowercows;
 
 import com.jracon.mcearth.setup.Registration;
 import net.minecraft.core.BlockPos;
@@ -155,7 +155,7 @@ public class MoolipEntity extends Cow implements IForgeShearable {
     }
     public static AttributeSupplier.Builder prepareAttributes() {
         return LivingEntity.createLivingAttributes()
-                .add(Attributes.MAX_HEALTH, 10.0)
+                .add(Attributes.MAX_HEALTH, 10.0D)
                 .add(Attributes.MOVEMENT_SPEED, (double)0.2F)
                 .add(Attributes.FOLLOW_RANGE, 32);
     }

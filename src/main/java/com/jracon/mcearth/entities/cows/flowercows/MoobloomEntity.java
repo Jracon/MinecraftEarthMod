@@ -1,4 +1,4 @@
-package com.jracon.mcearth.entities;
+package com.jracon.mcearth.entities.cows.flowercows;
 
 import com.jracon.mcearth.setup.Registration;
 import net.minecraft.core.BlockPos;
@@ -41,12 +41,19 @@ public class MoobloomEntity extends Cow implements IForgeShearable {
         super(pEntityType, pLevel);
     }
 
-    public float getWalkTargetValue(BlockPos pPos, LevelReader pLevel) {
-        return pLevel.getBlockState(pPos.below()).is(Blocks.GRASS) ? 10.0F : pLevel.getPathfindingCostFromLightLevels(pPos);
-    }
-
     public static boolean checkFlowerSpawnRules(EntityType<MoobloomEntity> pMoobloomEntity, LevelAccessor pLevle, MobSpawnType pSpawnType, BlockPos pPos, RandomSource pRandomSource) {
         return pLevle.getBlockState(pPos.below()).is(BlockTags.ANIMALS_SPAWNABLE_ON) && isBrightEnoughToSpawn(pLevle, pPos);
+    }
+
+    public static AttributeSupplier.Builder prepareAttributes() {
+        return LivingEntity.createLivingAttributes()
+                .add(Attributes.MAX_HEALTH, 10.0D)
+                .add(Attributes.MOVEMENT_SPEED, (double)0.2F)
+                .add(Attributes.FOLLOW_RANGE, 32);
+    }
+
+    public float getWalkTargetValue(BlockPos pPos, LevelReader pLevel) {
+        return pLevel.getBlockState(pPos.below()).is(Blocks.GRASS) ? 10.0F : pLevel.getPathfindingCostFromLightLevels(pPos);
     }
 
     protected void defineSynchedData() {
@@ -82,7 +89,6 @@ public class MoobloomEntity extends Cow implements IForgeShearable {
         shearInternal(pCategory).forEach(s -> this.level.addFreshEntity(new ItemEntity(this.level, this.getX(), this.getY(1.0D), this.getZ(), s)));
     }
 
-
     private java.util.List<ItemStack> shearInternal(SoundSource pCategory) {
         this.level.playSound((Player) null, this, SoundEvents.MOOSHROOM_SHEAR, pCategory, 1.0F, 1.0F);
         if (!this.level.isClientSide()) {
@@ -109,12 +115,12 @@ public class MoobloomEntity extends Cow implements IForgeShearable {
         this.setFlowerType(MoobloomEntity.FlowerType.byType(pCompound.getString("Type")));
     }
 
-    private void setFlowerType(MoobloomEntity.FlowerType pType) {
-        this.entityData.set(DATA_TYPE, pType.type);
-    }
-
     public MoobloomEntity.FlowerType getFlowerType() {
         return MoobloomEntity.FlowerType.byType(this.entityData.get(DATA_TYPE));
+    }
+
+    private void setFlowerType(MoobloomEntity.FlowerType pType) {
+        this.entityData.set(DATA_TYPE, pType.type);
     }
 
     @Nullable
@@ -127,7 +133,6 @@ public class MoobloomEntity extends Cow implements IForgeShearable {
     public boolean isShearable(@org.jetbrains.annotations.NotNull ItemStack item, Level world, BlockPos pos) {
         return readyForShearing();
     }
-
     public enum FlowerType {
         BUTTERCUP("buttercup", Registration.BUTTERCUP.get().defaultBlockState());
 
@@ -139,10 +144,6 @@ public class MoobloomEntity extends Cow implements IForgeShearable {
             this.blockState = pBlockState;
         }
 
-        public BlockState getBlockState() {
-            return this.blockState;
-        }
-
         static MoobloomEntity.FlowerType byType(String pName) {
             for (MoobloomEntity.FlowerType MoobloomEntity$FlowerType : values()) {
                 if (MoobloomEntity$FlowerType.type.equals(pName)) {
@@ -152,11 +153,9 @@ public class MoobloomEntity extends Cow implements IForgeShearable {
 
             return BUTTERCUP;
         }
-    }
-    public static AttributeSupplier.Builder prepareAttributes() {
-        return LivingEntity.createLivingAttributes()
-                .add(Attributes.MAX_HEALTH, 10.0)
-                .add(Attributes.MOVEMENT_SPEED, (double)0.2F)
-                .add(Attributes.FOLLOW_RANGE, 32);
+
+        public BlockState getBlockState() {
+            return this.blockState;
+        }
     }
 }

@@ -1,4 +1,4 @@
-package com.jracon.mcearth.entities;
+package com.jracon.mcearth.entities.cows.flowercows;
 
 import com.jracon.mcearth.MCEarth;
 import net.minecraft.client.renderer.entity.*;
@@ -12,7 +12,7 @@ public class MoobloomRenderer extends MobRenderer<MoobloomEntity, MoobloomModel<
     private static final ResourceLocation TEXTURE = new ResourceLocation(MCEarth.MOD_ID, "textures/entity/moobloom.png");
 
     public MoobloomRenderer(EntityRendererProvider.Context context) {
-        super(context, new MoobloomModel(context.bakeLayer(MoobloomModel.LAYER_LOCATION)), 1f);
+        super(context, new MoobloomModel(context.bakeLayer(MoobloomModel.LAYER_LOCATION)), 0.7f);
     }
 
     @Nonnull

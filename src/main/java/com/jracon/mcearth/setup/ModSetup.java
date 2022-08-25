@@ -1,8 +1,10 @@
 package com.jracon.mcearth.setup;
 
 import com.jracon.mcearth.MCEarth;
-import com.jracon.mcearth.entities.MoobloomEntity;
-import com.jracon.mcearth.entities.MoolipEntity;
+import com.jracon.mcearth.entities.chickens.CluckshroomEntity;
+import com.jracon.mcearth.entities.cows.flowercows.MoobloomEntity;
+import com.jracon.mcearth.entities.cows.flowercows.MoolipEntity;
+import com.jracon.mcearth.entities.pigs.MuddyPigEntity;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -33,7 +35,7 @@ public class ModSetup {
     public static void init(FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
             ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(Registration.BUTTERCUP.getId(), Registration.BUTTERCUP_POT);
-            ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(Registration.PINK_DAISY.getId(),Registration.PINK_DAISY_POT);
+            ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(Registration.PINK_DAISY.getId(), Registration.PINK_DAISY_POT);
         });
     }
 
@@ -41,5 +43,7 @@ public class ModSetup {
     public static void onAttributeCreate(EntityAttributeCreationEvent event) {
         event.put(Registration.MOOBLOOM.get(), MoobloomEntity.prepareAttributes().build());
         event.put(Registration.MOOLIP.get(), MoolipEntity.prepareAttributes().build());
+        event.put(Registration.CLUCKSHROOM.get(), CluckshroomEntity.prepareAttributes().build());
+        event.put(Registration.MUDDY_PIG.get(), MuddyPigEntity.prepareAttributes().build());
     }
 }

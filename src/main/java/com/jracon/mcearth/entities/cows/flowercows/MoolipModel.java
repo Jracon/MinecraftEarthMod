@@ -1,4 +1,4 @@
-package com.jracon.mcearth.entities;
+package com.jracon.mcearth.entities.cows.flowercows;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
