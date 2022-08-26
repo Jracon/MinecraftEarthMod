@@ -18,7 +18,7 @@ public class MCERecipes extends RecipeProvider {
     @Override
     protected void buildCraftingRecipes(Consumer<FinishedRecipe> consumer) {
         ShapelessRecipeBuilder.shapeless(Registration.MUD_BUCKET.get())
-            .requires(Blocks.DIRT, 8)
+                .requires(Blocks.DIRT, 8)
                 .requires(Items.WATER_BUCKET, 1);
     }
 }

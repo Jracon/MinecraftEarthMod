@@ -9,7 +9,7 @@ import net.minecraft.world.entity.animal.Chicken;
 
 import javax.annotation.Nonnull;
 
-public class CluckshroomRenderer extends MobRenderer<CluckshroomEntity, CluckshroomModel<CluckshroomEntity>>{
+public class CluckshroomRenderer extends MobRenderer<CluckshroomEntity, CluckshroomModel<CluckshroomEntity>> {
 
     private static final ResourceLocation TEXTURE = new ResourceLocation(MCEarth.MOD_ID, "textures/entity/cluckshroom.png");
 

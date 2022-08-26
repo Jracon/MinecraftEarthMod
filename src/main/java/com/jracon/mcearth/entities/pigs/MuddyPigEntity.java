@@ -29,6 +29,13 @@ public class MuddyPigEntity extends Pig {
         super(pEntityType, pLevel);
     }
 
+    public static AttributeSupplier.Builder prepareAttributes() {
+        return LivingEntity.createLivingAttributes()
+                .add(Attributes.MAX_HEALTH, 4.0D)
+                .add(Attributes.MOVEMENT_SPEED, (double) 0.25D)
+                .add(Attributes.FOLLOW_RANGE, 32);
+    }
+
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
@@ -51,11 +58,11 @@ public class MuddyPigEntity extends Pig {
 
     class MuddyPigGoToMudFluidGoal extends Goal {
         private final PathfinderMob mob;
+        private final double speedModifier;
+        private final Level level;
         private double wantedX;
         private double wantedY;
         private double wantedZ;
-        private final double speedModifier;
-        private final Level level;
 
         public MuddyPigGoToMudFluidGoal(PathfinderMob pMob, double pSpeedModifier) {
             this.mob = pMob;
@@ -79,7 +86,7 @@ public class MuddyPigEntity extends Pig {
                 }
             }
         }
-        
+
         public boolean canContinueToUse() {
             return !this.mob.getNavigation().isDone();
         }
@@ -93,7 +100,7 @@ public class MuddyPigEntity extends Pig {
             RandomSource randomsource = this.mob.getRandom();
             BlockPos blockpos = this.mob.blockPosition();
 
-            for(int i = 0; i < 10; ++i) {
+            for (int i = 0; i < 10; ++i) {
                 BlockPos blockpos1 = blockpos.offset(randomsource.nextInt(20) - 10, 2 - randomsource.nextInt(8), randomsource.nextInt(20) - 10);
                 if (this.level.getBlockState(blockpos1).is(Registration.MUD_FLUID_BLOCK.get())) {
                     return Vec3.atBottomCenterOf(blockpos1);
@@ -102,11 +109,5 @@ public class MuddyPigEntity extends Pig {
 
             return null;
         }
-    }
-    public static AttributeSupplier.Builder prepareAttributes() {
-        return LivingEntity.createLivingAttributes()
-                .add(Attributes.MAX_HEALTH, 4.0D)
-                .add(Attributes.MOVEMENT_SPEED, (double) 0.25D)
-                .add(Attributes.FOLLOW_RANGE, 32);
     }
 }

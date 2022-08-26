@@ -2,6 +2,7 @@ package com.jracon.mcearth.datagen;
 
 import com.jracon.mcearth.setup.Registration;
 import net.minecraft.data.DataGenerator;
+
 public class MCELootTables extends BaseLootTableProvider {
 
     public MCELootTables(DataGenerator dataGeneratorIn) {

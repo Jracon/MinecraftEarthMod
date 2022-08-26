@@ -4,7 +4,6 @@ import com.jracon.mcearth.MCEarth;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.data.tags.ItemTagsProvider;
-import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 public class MCEItemTags extends ItemTagsProvider {

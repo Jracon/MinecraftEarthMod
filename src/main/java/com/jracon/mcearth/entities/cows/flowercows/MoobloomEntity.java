@@ -48,7 +48,7 @@ public class MoobloomEntity extends Cow implements IForgeShearable {
     public static AttributeSupplier.Builder prepareAttributes() {
         return LivingEntity.createLivingAttributes()
                 .add(Attributes.MAX_HEALTH, 10.0D)
-                .add(Attributes.MOVEMENT_SPEED, (double)0.2F)
+                .add(Attributes.MOVEMENT_SPEED, (double) 0.2F)
                 .add(Attributes.FOLLOW_RANGE, 32);
     }
 
@@ -133,6 +133,7 @@ public class MoobloomEntity extends Cow implements IForgeShearable {
     public boolean isShearable(@org.jetbrains.annotations.NotNull ItemStack item, Level world, BlockPos pos) {
         return readyForShearing();
     }
+
     public enum FlowerType {
         BUTTERCUP("buttercup", Registration.BUTTERCUP.get().defaultBlockState());
 

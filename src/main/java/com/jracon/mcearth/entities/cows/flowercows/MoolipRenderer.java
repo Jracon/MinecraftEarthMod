@@ -1,13 +1,13 @@
 package com.jracon.mcearth.entities.cows.flowercows;
 
 import com.jracon.mcearth.MCEarth;
-import net.minecraft.client.renderer.entity.*;
-
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 
 import javax.annotation.Nonnull;
 
-public class MoolipRenderer extends MobRenderer<MoolipEntity, MoolipModel<MoolipEntity>>{
+public class MoolipRenderer extends MobRenderer<MoolipEntity, MoolipModel<MoolipEntity>> {
 
     private static final ResourceLocation TEXTURE = new ResourceLocation(MCEarth.MOD_ID, "textures/entity/moolip.png");
 

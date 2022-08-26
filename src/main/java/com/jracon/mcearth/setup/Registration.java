@@ -39,6 +39,7 @@ public class Registration {
     public static final ResourceLocation MUD_OVERLAY_RL = new ResourceLocation(MOD_ID, "misc/mud_fluid_overlay");
     public static final RegistryObject<FluidType> MUD_FLUID_TYPE = register("mud_fluid",
             FluidType.Properties.create().lightLevel(0));
+    public static final TagKey<Fluid> MUD = TagKey.create(Registry.FLUID_REGISTRY, new ResourceLocation(MOD_ID, "mud"));
     private static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MOD_ID);
     private static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MOD_ID);
     public static final RegistryObject<FlowerBlock> BUTTERCUP = registerBlock("buttercup", () ->
@@ -54,29 +55,25 @@ public class Registration {
             .sized(0.9f, 1.4f)
             .setShouldReceiveVelocityUpdates(false)
             .build("moobloom"));
-    public static final RegistryObject<Item> MOOBLOOM_SPAWN_EGG = ITEMS.register("moobloom_spawn_egg", () -> new ForgeSpawnEggItem(MOOBLOOM, 0xffd600, 0xfaf7dc, new Item.Properties().tab(ModSetup.ITEM_GROUP)));
-    public static final RegistryObject<FlowingFluid> SOURCE_MUD_FLUID = FLUIDS.register("mud_fluid_block",
+    public static final RegistryObject<Item> MOOBLOOM_SPAWN_EGG = ITEMS.register("moobloom_spawn_egg", () -> new ForgeSpawnEggItem(MOOBLOOM, 0xffd600, 0xfaf7dc, new Item.Properties().tab(ModSetup.ITEM_GROUP)));    public static final RegistryObject<FlowingFluid> SOURCE_MUD_FLUID = FLUIDS.register("mud_fluid_block",
             () -> new ForgeFlowingFluid.Source(Registration.MUD_FLUID_PROPERTIES));
     public static final RegistryObject<EntityType<MoolipEntity>> MOOLIP = ENTITIES.register("moolip", () -> EntityType.Builder.of(MoolipEntity::new, MobCategory.CREATURE)
             .sized(0.9f, 1.4f)
             .setShouldReceiveVelocityUpdates(false)
             .build("moolip"));
-    public static final RegistryObject<FlowingFluid> FLOWING_MUD_FLUID = FLUIDS.register("flowing_mud_fluid",
+    public static final RegistryObject<Item> MOOLIP_SPAWN_EGG = ITEMS.register("moolip_spawn_egg", () -> new ForgeSpawnEggItem(MOOLIP, 0xdb307b, 0x7a3653, new Item.Properties().tab(ModSetup.ITEM_GROUP)));    public static final RegistryObject<FlowingFluid> FLOWING_MUD_FLUID = FLUIDS.register("flowing_mud_fluid",
             () -> new ForgeFlowingFluid.Flowing(Registration.MUD_FLUID_PROPERTIES));
-    public static final RegistryObject<Item> MOOLIP_SPAWN_EGG = ITEMS.register("moolip_spawn_egg", () -> new ForgeSpawnEggItem(MOOLIP, 0xdb307b, 0x7a3653, new Item.Properties().tab(ModSetup.ITEM_GROUP)));
-    public static final RegistryObject<LiquidBlock> MUD_FLUID_BLOCK = BLOCKS.register("mud_fluid_block",
-            () -> new LiquidBlock(Registration.SOURCE_MUD_FLUID, BlockBehaviour.Properties.copy(Blocks.WATER)));
     public static final RegistryObject<EntityType<CluckshroomEntity>> CLUCKSHROOM = ENTITIES.register("cluckshroom", () -> EntityType.Builder.of(CluckshroomEntity::new, MobCategory.CREATURE)
             .sized(0.4f, 0.7f)
             .setShouldReceiveVelocityUpdates(false)
             .build("cluckshroom"));
-    public static final RegistryObject<Item> CLUCKSHROOM_SPAWN_EGG = ITEMS.register("cluckshroom_spawn_egg", () -> new ForgeSpawnEggItem(CLUCKSHROOM, 0xd41c20, 0xf59545, new Item.Properties().tab(ModSetup.ITEM_GROUP)));
+    public static final RegistryObject<Item> CLUCKSHROOM_SPAWN_EGG = ITEMS.register("cluckshroom_spawn_egg", () -> new ForgeSpawnEggItem(CLUCKSHROOM, 0xd41c20, 0xf59545, new Item.Properties().tab(ModSetup.ITEM_GROUP)));    public static final RegistryObject<LiquidBlock> MUD_FLUID_BLOCK = BLOCKS.register("mud_fluid_block",
+            () -> new LiquidBlock(Registration.SOURCE_MUD_FLUID, BlockBehaviour.Properties.copy(Blocks.WATER)));
     public static final RegistryObject<EntityType<MuddyPigEntity>> MUDDY_PIG = ENTITIES.register("muddy_pig", () -> EntityType.Builder.of(MuddyPigEntity::new, MobCategory.CREATURE)
             .sized(0.9f, 0.9f)
             .setShouldReceiveVelocityUpdates(false)
             .build("muddy_pig"));
     public static final RegistryObject<Item> MUDDY_PIG_SPAWN_EGG = ITEMS.register("muddy_pig_spawn_egg", () -> new ForgeSpawnEggItem(MUDDY_PIG, 0xd41c20, 0xf59545, new Item.Properties().tab(ModSetup.ITEM_GROUP)));
-
 
     public static void init() {
 
@@ -86,15 +83,11 @@ public class Registration {
         ENTITIES.register(bus);
         FLUIDS.register(bus);
         FLUID_TYPES.register(bus);
-    }    public static final RegistryObject<Item> MUD_BUCKET = ITEMS.register("mud_bucket",
-            () -> new BucketItem(Registration.SOURCE_MUD_FLUID, new Item.Properties().tab(ModSetup.ITEM_GROUP).rarity(Rarity.RARE).stacksTo(1)));
+    }
 
     private static RegistryObject<FluidType> register(String name, FluidType.Properties properties) {
         return FLUID_TYPES.register(name, () -> new BaseFluidType(MUD_STILL_RL, MUD_FLOWING_RL, MUD_OVERLAY_RL, properties));
-    }    public static final ForgeFlowingFluid.Properties MUD_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
-            Registration.MUD_FLUID_TYPE, SOURCE_MUD_FLUID, FLOWING_MUD_FLUID)
-            .slopeFindDistance(0).levelDecreasePerBlock(4).block(Registration.MUD_FLUID_BLOCK)
-            .bucket(Registration.MUD_BUCKET).explosionResistance(50);
+    }
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block, CreativeModeTab tab) {
         RegistryObject<T> toReturn = BLOCKS.register(name, block);
@@ -105,8 +98,20 @@ public class Registration {
     private static <T extends Block> RegistryObject<Item> registerBlockItem(String name, RegistryObject<T> block,
                                                                             CreativeModeTab tab) {
         return Registration.ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties().tab(tab)));
-    }
+    }    public static final RegistryObject<Item> MUD_BUCKET = ITEMS.register("mud_bucket",
+            () -> new BucketItem(Registration.SOURCE_MUD_FLUID, new Item.Properties().tab(ModSetup.ITEM_GROUP).rarity(Rarity.RARE).stacksTo(1)));
 
-    public static final TagKey<Fluid> MUD = TagKey.create(Registry.FLUID_REGISTRY, new ResourceLocation(MOD_ID, "mud"));
+
+
+    public static final ForgeFlowingFluid.Properties MUD_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
+            Registration.MUD_FLUID_TYPE, SOURCE_MUD_FLUID, FLOWING_MUD_FLUID)
+            .slopeFindDistance(0).levelDecreasePerBlock(4).block(Registration.MUD_FLUID_BLOCK)
+            .bucket(Registration.MUD_BUCKET).explosionResistance(50);
+
+
+
+
+
+
 
 }

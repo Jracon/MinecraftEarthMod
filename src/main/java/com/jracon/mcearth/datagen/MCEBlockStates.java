@@ -8,7 +8,9 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 
 public class MCEBlockStates extends BlockStateProvider {
 
-    public MCEBlockStates(DataGenerator gen, ExistingFileHelper helper) { super(gen, MCEarth.MOD_ID, helper); }
+    public MCEBlockStates(DataGenerator gen, ExistingFileHelper helper) {
+        super(gen, MCEarth.MOD_ID, helper);
+    }
 
     @Override
     protected void registerStatesAndModels() {
