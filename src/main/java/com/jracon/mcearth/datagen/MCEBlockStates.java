@@ -12,7 +12,7 @@ public class MCEBlockStates extends BlockStateProvider {
 
     @Override
     protected void registerStatesAndModels() {
-        simpleBlock(Registration.BUTTERCUP.get(), models().cross("buttercup", modLoc("block/buttercup")));
-        simpleBlock(Registration.PINK_DAISY.get(), models().cross("pink_daisy", modLoc("block/pink_daisy")));
+        simpleBlock(Registration.BUTTERCUP.get(), models().cross("buttercup", modLoc("block/buttercup")).renderType("cutout"));
+        simpleBlock(Registration.PINK_DAISY.get(), models().cross("pink_daisy", modLoc("block/pink_daisy")).renderType("cutout"));
     }
 }

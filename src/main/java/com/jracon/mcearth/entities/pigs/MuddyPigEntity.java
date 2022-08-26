@@ -13,7 +13,6 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.animal.Pig;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
@@ -66,9 +65,7 @@ public class MuddyPigEntity extends Pig {
         }
 
         public boolean canUse() {
-            if (!this.level.isDay()) {
-                return false;
-            } else if (isInMud()) {
+            if (false) {
                 return false;
             } else {
                 Vec3 vec3 = this.getMudPos();
@@ -105,43 +102,6 @@ public class MuddyPigEntity extends Pig {
 
             return null;
         }
-    }
-
-    public boolean isInMud() {
-        return this.wasTouchingMud;
-    }
-
-    public void tick() {
-        this.baseTick();
-    }
-
-    public void baseTick() {
-        this.updateInMudState();
-    }
-
-    protected boolean updateInMudState() {
-        this.fluidHeight.clear();
-        this.forgeFluidTypeHeight.clear();
-        this.updateInMudStateAnd();
-        if (!(this.getVehicle() instanceof Boat)) {
-            this.fallDistance *= this.forgeFluidTypeHeight.object2DoubleEntrySet().stream().filter(e -> !e.getKey().isAir() && !e.getKey().isVanilla()).map(e -> this.getFluidFallDistanceModifier(e.getKey())).min(Float::compare).orElse(1F);
-            if (this.isInFluidType((fluidType, height) -> !fluidType.isAir() && !fluidType.isVanilla() && this.canFluidExtinguish(fluidType))) this.clearFire();
-        }
-        return this.isInFluidType();
-    }
-
-    void updateInMudStateAnd() {
-        if (this.updateFluidHeightAndDoFluidPushing(Registration.MUD, 0.014D)) {
-            if (!this.wasTouchingMud && !this.firstTick) {
-                this.doWaterSplashEffect();
-            }
-            this.resetFallDistance();
-            this.wasTouchingMud = true;
-            this.clearFire();
-        } else {
-            this.wasTouchingMud = false;
-        }
-
     }
     public static AttributeSupplier.Builder prepareAttributes() {
         return LivingEntity.createLivingAttributes()
