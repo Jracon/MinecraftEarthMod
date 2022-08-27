@@ -22,8 +22,6 @@ import static com.jracon.mcearth.MCEarth.MOD_ID;
 public class ClientSetup {
 
     public static void init(FMLClientSetupEvent event) {
-        ItemBlockRenderTypes.setRenderLayer(Registration.BUTTERCUP_POT.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(Registration.PINK_DAISY_POT.get(), RenderType.cutout());
         ItemBlockRenderTypes.setRenderLayer(Registration.SOURCE_MUD_FLUID.get(), RenderType.translucent());
         ItemBlockRenderTypes.setRenderLayer(Registration.FLOWING_MUD_FLUID.get(), RenderType.translucent());
     }
