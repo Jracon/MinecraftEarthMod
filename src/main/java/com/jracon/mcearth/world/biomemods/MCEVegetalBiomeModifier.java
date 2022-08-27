@@ -9,6 +9,8 @@ import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraftforge.common.world.BiomeModifier;
 import net.minecraftforge.common.world.ModifiableBiomeInfo;
 
+import static com.jracon.mcearth.setup.Registration.VEGETAL_MODIFIER;
+
 public record MCEVegetalBiomeModifier(HolderSet<Biome> biomes, Holder<PlacedFeature> feature) implements BiomeModifier {
     @Override
     public void modify(Holder<Biome> biome, Phase phase, ModifiableBiomeInfo.BiomeInfo.Builder builder){
@@ -18,5 +20,5 @@ public record MCEVegetalBiomeModifier(HolderSet<Biome> biomes, Holder<PlacedFeat
     }
 
     @Override
-    public Codec<? extends BiomeModifier> codec() { return MCEBiomeModifiers.VEGETAL_MODIFIER.get(); }
+    public Codec<? extends BiomeModifier> codec() { return VEGETAL_MODIFIER.get(); }
 }

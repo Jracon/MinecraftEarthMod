@@ -3,8 +3,6 @@ package com.jracon.mcearth;
 import com.jracon.mcearth.setup.ClientSetup;
 import com.jracon.mcearth.setup.ModSetup;
 import com.jracon.mcearth.setup.Registration;
-import com.jracon.mcearth.world.biomemods.MCEBiomeModifiers;
-import com.jracon.mcearth.world.feature.MCEPlacedFeatures;
 import com.mojang.logging.LogUtils;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -25,10 +23,6 @@ public class MCEarth {
         Registration.init();
 
         IEventBus modbus = FMLJavaModLoadingContext.get().getModEventBus();
-
-        MCEBiomeModifiers.register(modbus);
-        MCEPlacedFeatures.register(modbus);
-
         modbus.addListener(ModSetup::init);
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> modbus.addListener(ClientSetup::init));
     }
