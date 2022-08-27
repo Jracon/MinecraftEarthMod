@@ -1,0 +1,7 @@
+{
+  "type": "mcearth:vegetal",
+  "biomes": [
+    "minecraft:plains"
+  ],
+  "feature": "mcearth:pink_daisy_placed"
+}
