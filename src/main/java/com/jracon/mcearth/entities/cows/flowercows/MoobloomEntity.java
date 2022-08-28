@@ -2,6 +2,7 @@ package com.jracon.mcearth.entities.cows.flowercows;
 
 import com.jracon.mcearth.setup.Registration;
 import net.minecraft.core.BlockPos;
+import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -27,12 +28,15 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraftforge.common.IForgeShearable;
 
 import javax.annotation.Nullable;
+import java.util.Random;
 
 public class MoobloomEntity extends Cow implements IForgeShearable {
     private static final EntityDataAccessor<String> DATA_TYPE = SynchedEntityData.defineId(MoobloomEntity.class, EntityDataSerializers.STRING);
@@ -41,8 +45,8 @@ public class MoobloomEntity extends Cow implements IForgeShearable {
         super(pEntityType, pLevel);
     }
 
-    public static boolean checkFlowerSpawnRules(EntityType<MoobloomEntity> pMoobloomEntity, LevelAccessor pLevle, MobSpawnType pSpawnType, BlockPos pPos, RandomSource pRandomSource) {
-        return pLevle.getBlockState(pPos.below()).is(BlockTags.ANIMALS_SPAWNABLE_ON) && isBrightEnoughToSpawn(pLevle, pPos);
+    public static boolean checkFlowerSpawnRules(EntityType<MoobloomEntity> pMoobloomEntity, LevelAccessor pLevel, MobSpawnType pSpawnType, BlockPos pPos, RandomSource pRandomSource) {
+        return pLevel.getBlockState(pPos.below()).is(BlockTags.ANIMALS_SPAWNABLE_ON) && isBrightEnoughToSpawn(pLevel, pPos);
     }
 
     public static AttributeSupplier.Builder prepareAttributes() {
@@ -50,6 +54,27 @@ public class MoobloomEntity extends Cow implements IForgeShearable {
                 .add(Attributes.MAX_HEALTH, 10.0D)
                 .add(Attributes.MOVEMENT_SPEED, (double) 0.2F)
                 .add(Attributes.FOLLOW_RANGE, 32);
+    }
+
+    public void tick() {
+        super.tick();
+        if (!this.level.isClientSide) {
+            this.tickLeash();
+            if (this.tickCount % 5 == 0) {
+                this.updateControlFlags();
+            }
+        }
+        int a = new Random().nextInt(10);
+        if (a < 3) {
+            if (level.getBlockState(this.blockPosition().below(0)).is(Blocks.AIR) && level.getBlockState(this.blockPosition().below(1)).is(Blocks.GRASS_BLOCK)) {
+                level.setBlock(this.blockPosition().below(0), Registration.BUTTERCUP.get().defaultBlockState(), 1);
+            }
+        }
+        else {
+            if (level.getBlockState(this.blockPosition().below(0)).is(Blocks.AIR) && level.getBlockState(this.blockPosition().below(1)).is(Blocks.GRASS_BLOCK)) {
+                level.setBlock(this.blockPosition().below(0), Blocks.SUNFLOWER.defaultBlockState(), 1);
+            }
+        }
     }
 
     public float getWalkTargetValue(BlockPos pPos, LevelReader pLevel) {

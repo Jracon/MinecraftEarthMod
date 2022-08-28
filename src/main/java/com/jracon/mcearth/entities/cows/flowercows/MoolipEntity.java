@@ -33,6 +33,7 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraftforge.common.IForgeShearable;
 
 import javax.annotation.Nullable;
+import java.util.Random;
 
 public class MoolipEntity extends Cow implements IForgeShearable {
     private static final EntityDataAccessor<String> DATA_TYPE = SynchedEntityData.defineId(MoolipEntity.class, EntityDataSerializers.STRING);
@@ -76,6 +77,34 @@ public class MoolipEntity extends Cow implements IForgeShearable {
             return InteractionResult.sidedSuccess(this.level.isClientSide);
         } else {
             return super.mobInteract(pPlayer, pHand);
+        }
+    }
+
+    public void tick() {
+        super.tick();
+        if (!this.level.isClientSide) {
+            this.tickLeash();
+            if (this.tickCount % 5 == 0) {
+                this.updateControlFlags();
+            }
+        }
+        int a = new Random().nextInt(10);
+        if (a < 7) {
+            int b = new Random().nextInt(10);
+            if (b < 6) {
+                if (level.getBlockState(this.blockPosition().below(0)).is(Blocks.AIR) && level.getBlockState(this.blockPosition().below(1)).is(Blocks.GRASS_BLOCK)) {
+                    level.setBlock(this.blockPosition().below(0), Blocks.ALLIUM.defaultBlockState(), 1);
+                }
+            } else {
+                if (level.getBlockState(this.blockPosition().below(0)).is(Blocks.AIR) && level.getBlockState(this.blockPosition().below(1)).is(Blocks.GRASS_BLOCK)) {
+                    level.setBlock(this.blockPosition().below(0), Blocks.LILAC.defaultBlockState(), 1);
+                }
+            }
+        }
+        else {
+            if (level.getBlockState(this.blockPosition().below(0)).is(Blocks.AIR) && level.getBlockState(this.blockPosition().below(1)).is(Blocks.GRASS_BLOCK)) {
+                level.setBlock(this.blockPosition().below(0), Blocks.PEONY.defaultBlockState(), 1);
+            }
         }
     }
 
