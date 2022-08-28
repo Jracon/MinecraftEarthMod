@@ -17,9 +17,11 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.EnumSet;
@@ -35,13 +37,13 @@ public class CluckshroomEntity extends Chicken {
     public static AttributeSupplier.Builder prepareAttributes() {
         return LivingEntity.createLivingAttributes()
                 .add(Attributes.MAX_HEALTH, 4.0D)
-                .add(Attributes.MOVEMENT_SPEED, (double) 0.25D)
+                .add(Attributes.MOVEMENT_SPEED, 0.25D)
                 .add(Attributes.FOLLOW_RANGE, 32);
     }
 
     @Override
     @Nullable
-    public Chicken getBreedOffspring(ServerLevel pLevel, AgeableMob pOtherParent) {
+    public Chicken getBreedOffspring(@NotNull ServerLevel pLevel, @NotNull AgeableMob pOtherParent) {
         return null;
     }
 
@@ -56,6 +58,19 @@ public class CluckshroomEntity extends Chicken {
         this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1.0D));
         this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
+    }
+
+    public void tick() {
+        super.tick();
+        if (!this.level.isClientSide) {
+            this.tickLeash();
+            if (this.tickCount % 5 == 0) {
+                this.updateControlFlags();
+            }
+        }
+        if (level.getBlockState(this.blockPosition().below(0)).is(Blocks.AIR) && level.getBlockState(this.blockPosition().below(1)).is(Blocks.GRASS_BLOCK)) {
+            level.setBlock(this.blockPosition().below(0), Blocks.RED_MUSHROOM.defaultBlockState(), 1);
+        }
     }
 
     public void aiStep() {
@@ -84,7 +99,7 @@ public class CluckshroomEntity extends Chicken {
 
     }
 
-    public class CluckshroomFleeSunGoal extends Goal {
+    public static class CluckshroomFleeSunGoal extends Goal {
         protected final PathfinderMob mob;
         private final double speedModifier;
         private final Level level;
@@ -102,11 +117,7 @@ public class CluckshroomEntity extends Chicken {
         public boolean canUse() {
             if (!this.level.isDay()) {
                 return false;
-            } else if (!this.level.canSeeSky(this.mob.blockPosition())) {
-                return false;
-            } else {
-                return true;
-            }
+            } else return this.level.canSeeSky(this.mob.blockPosition());
         }
 
         public boolean canContinueToUse() {
@@ -117,19 +128,5 @@ public class CluckshroomEntity extends Chicken {
             this.mob.getNavigation().moveTo(this.wantedX, this.wantedY, this.wantedZ, this.speedModifier);
         }
 
-        @Nullable
-        protected Vec3 getHidePos() {
-            RandomSource randomsource = this.mob.getRandom();
-            BlockPos blockpos = this.mob.blockPosition();
-
-            for (int i = 0; i < 10; ++i) {
-                BlockPos blockpos1 = blockpos.offset(randomsource.nextInt(20) - 10, randomsource.nextInt(6) - 3, randomsource.nextInt(20) - 10);
-                if (!this.level.canSeeSky(blockpos1) && this.mob.getWalkTargetValue(blockpos1) < 0.0F) {
-                    return Vec3.atBottomCenterOf(blockpos1);
-                }
-            }
-
-            return null;
-        }
     }
 }

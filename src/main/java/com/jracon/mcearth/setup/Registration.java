@@ -71,7 +71,7 @@ public class Registration {
 
     // Fluid Registry Objects
     public static final RegistryObject<FluidType> MUD_FLUID_TYPE = registerFluid("mud_fluid",
-            FluidType.Properties.create().lightLevel(0));
+            FluidType.Properties.create().lightLevel(0).density(100).viscosity(100));
     public static final RegistryObject<FlowingFluid> FLOWING_MUD_FLUID = FLUIDS.register("flowing_mud_fluid",
             () -> new ForgeFlowingFluid.Flowing(Registration.MUD_FLUID_PROPERTIES));
     public static final RegistryObject<FlowingFluid> SOURCE_MUD_FLUID = FLUIDS.register("mud_fluid_block",

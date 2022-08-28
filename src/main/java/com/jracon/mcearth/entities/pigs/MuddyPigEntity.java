@@ -17,13 +17,13 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.EnumSet;
 
 public class MuddyPigEntity extends Pig {
     private static final Ingredient FOOD_ITEMS = Ingredient.of(Items.CARROT, Items.POTATO, Items.BEETROOT);
-    protected boolean wasTouchingMud;
 
     public MuddyPigEntity(EntityType<? extends MuddyPigEntity> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
@@ -32,7 +32,7 @@ public class MuddyPigEntity extends Pig {
     public static AttributeSupplier.Builder prepareAttributes() {
         return LivingEntity.createLivingAttributes()
                 .add(Attributes.MAX_HEALTH, 4.0D)
-                .add(Attributes.MOVEMENT_SPEED, (double) 0.25D)
+                .add(Attributes.MOVEMENT_SPEED, 0.25)
                 .add(Attributes.FOLLOW_RANGE, 32);
     }
 
@@ -52,11 +52,11 @@ public class MuddyPigEntity extends Pig {
 
     @Nullable
     @Override
-    public MuddyPigEntity getBreedOffspring(ServerLevel pLevel, AgeableMob pOtherParent) {
+    public MuddyPigEntity getBreedOffspring(@NotNull ServerLevel pLevel, @NotNull AgeableMob pOtherParent) {
         return null;
     }
 
-    class MuddyPigGoToMudFluidGoal extends Goal {
+    static class MuddyPigGoToMudFluidGoal extends Goal {
         private final PathfinderMob mob;
         private final double speedModifier;
         private final Level level;
@@ -72,18 +72,14 @@ public class MuddyPigEntity extends Pig {
         }
 
         public boolean canUse() {
-            if (false) {
+            Vec3 vec3 = this.getMudPos();
+            if (vec3 == null) {
                 return false;
             } else {
-                Vec3 vec3 = this.getMudPos();
-                if (vec3 == null) {
-                    return false;
-                } else {
-                    this.wantedX = vec3.x;
-                    this.wantedY = vec3.y;
-                    this.wantedZ = vec3.z;
-                    return true;
-                }
+                this.wantedX = vec3.x;
+                this.wantedY = vec3.y;
+                this.wantedZ = vec3.z;
+                return true;
             }
         }
 
