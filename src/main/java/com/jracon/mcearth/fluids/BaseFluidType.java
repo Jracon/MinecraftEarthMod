@@ -31,6 +31,8 @@ public class BaseFluidType extends FluidType {
         return overlayTexture;
     }
 
+
+
     @Override
     public void initializeClient(Consumer<IClientFluidTypeExtensions> consumer) {
         consumer.accept(new IClientFluidTypeExtensions() {

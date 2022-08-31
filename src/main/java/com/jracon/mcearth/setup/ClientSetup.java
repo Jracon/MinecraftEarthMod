@@ -8,6 +8,7 @@ import com.jracon.mcearth.entities.cows.flowercows.MoolipModel;
 import com.jracon.mcearth.entities.cows.flowercows.MoolipRenderer;
 import com.jracon.mcearth.entities.pigs.MuddyPigModel;
 import com.jracon.mcearth.entities.pigs.MuddyPigRenderer;
+import com.jracon.mcearth.fluids.MCEInteractionInformations;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraftforge.api.distmarker.Dist;
@@ -24,6 +25,7 @@ public class ClientSetup {
     public static void init(FMLClientSetupEvent event) {
         ItemBlockRenderTypes.setRenderLayer(Registration.SOURCE_MUD_FLUID.get(), RenderType.translucent());
         ItemBlockRenderTypes.setRenderLayer(Registration.FLOWING_MUD_FLUID.get(), RenderType.translucent());
+        MCEInteractionInformations.init();
     }
 
     @SubscribeEvent
