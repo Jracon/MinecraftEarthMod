@@ -5,7 +5,6 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.animal.Chicken;
 
 import javax.annotation.Nonnull;
 
@@ -23,7 +22,7 @@ public class CluckshroomRenderer extends MobRenderer<CluckshroomEntity, Cluckshr
         return TEXTURE;
     }
 
-    protected float getBob(Chicken pLivingBase, float pPartialTicks) {
+    protected float getBob(CluckshroomEntity pLivingBase, float pPartialTicks) {
         float f = Mth.lerp(pPartialTicks, pLivingBase.oFlap, pLivingBase.flap);
         float f1 = Mth.lerp(pPartialTicks, pLivingBase.oFlapSpeed, pLivingBase.flapSpeed);
         return (Mth.sin(f) + 1.0F) * f1;
