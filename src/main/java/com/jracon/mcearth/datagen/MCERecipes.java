@@ -20,6 +20,9 @@ public class MCERecipes extends RecipeProvider {
     protected void buildCraftingRecipes(@NotNull Consumer<FinishedRecipe> consumer) {
         ShapelessRecipeBuilder.shapeless(Registration.MUD_BUCKET.get())
                 .requires(Blocks.DIRT, 8)
-                .requires(Items.WATER_BUCKET, 1);
+                .requires(Items.WATER_BUCKET, 1)
+                .unlockedBy("has_item", has(Items.WATER_BUCKET))
+                .group("mcearth")
+                .save(consumer);
     }
 }
