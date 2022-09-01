@@ -1,6 +1,7 @@
 package com.jracon.mcearth.entities.chickens;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
@@ -152,13 +153,13 @@ public class CluckshroomEntity extends Animal {
 
     public void positionRider(Entity pPassenger) {
         super.positionRider(pPassenger);
-        float f = Mth.sin(this.yBodyRot * ((float)Math.PI / 180F));
-        float f1 = Mth.cos(this.yBodyRot * ((float)Math.PI / 180F));
+        float f = Mth.sin(this.yBodyRot * ((float) Math.PI / 180F));
+        float f1 = Mth.cos(this.yBodyRot * ((float) Math.PI / 180F));
         float f2 = 0.1F;
         float f3 = 0.0F;
-        pPassenger.setPos(this.getX() + (double)(0.1F * f), this.getY(0.5D) + pPassenger.getMyRidingOffset() + 0.0D, this.getZ() - (double)(0.1F * f1));
+        pPassenger.setPos(this.getX() + (double) (0.1F * f), this.getY(0.5D) + pPassenger.getMyRidingOffset() + 0.0D, this.getZ() - (double) (0.1F * f1));
         if (pPassenger instanceof LivingEntity) {
-            ((LivingEntity)pPassenger).yBodyRot = this.yBodyRot;
+            ((LivingEntity) pPassenger).yBodyRot = this.yBodyRot;
         }
 
     }
@@ -166,6 +167,7 @@ public class CluckshroomEntity extends Animal {
     public boolean isChickenJockey() {
         return this.isChickenJockey;
     }
+
     public void setChickenJockey(boolean pIsChickenJockey) {
         this.isChickenJockey = pIsChickenJockey;
     }
@@ -178,11 +180,12 @@ public class CluckshroomEntity extends Animal {
                 this.updateControlFlags();
             }
         }
-        if (level.getBlockState(this.blockPosition().below(0)).is(Blocks.AIR) && level.getBlockState(this.blockPosition().below(1)).is(Blocks.GRASS_BLOCK)) {
-            level.setBlock(this.blockPosition().below(0), Blocks.RED_MUSHROOM.defaultBlockState(), 1);
+        if (level.getLightEngine().getRawBrightness(this.blockPosition(), 1) <= 12) {
+            if (level.getBlockState(this.blockPosition().below(0)).getProperties().isEmpty() && level.getBlockState(this.blockPosition().below(1)).isFaceSturdy(level, this.blockPosition().below(), Direction.UP)) {
+                level.setBlock(this.blockPosition().below(0), Blocks.RED_MUSHROOM.defaultBlockState(), 1);
+            }
         }
     }
-
 
 
     public static class CluckshroomFleeSunGoal extends Goal {
