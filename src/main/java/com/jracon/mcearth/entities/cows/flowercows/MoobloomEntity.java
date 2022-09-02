@@ -2,7 +2,6 @@ package com.jracon.mcearth.entities.cows.flowercows;
 
 import com.jracon.mcearth.setup.Registration;
 import net.minecraft.core.BlockPos;
-import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -28,10 +27,10 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraftforge.common.IForgeShearable;
 
@@ -65,14 +64,12 @@ public class MoobloomEntity extends Cow implements IForgeShearable {
             }
         }
         int a = new Random().nextInt(10);
-        if (a < 3) {
-            if (level.getBlockState(this.blockPosition().below(0)).is(Blocks.AIR) && level.getBlockState(this.blockPosition().below(1)).is(Blocks.GRASS_BLOCK)) {
-                level.setBlock(this.blockPosition().below(0), Registration.BUTTERCUP.get().defaultBlockState(), 1);
-            }
-        }
-        else {
-            if (level.getBlockState(this.blockPosition().below(0)).is(Blocks.AIR) && level.getBlockState(this.blockPosition().below(1)).is(Blocks.GRASS_BLOCK)) {
-                level.setBlock(this.blockPosition().below(0), Blocks.SUNFLOWER.defaultBlockState(), 1);
+        if (level.getBlockState(this.blockPosition().below(0)).getProperties().isEmpty() && (level.getBlockState(this.blockPosition().below(1)).is(Blocks.DIRT) || level.getBlockState(this.blockPosition().below(1)).is(Blocks.GRASS_BLOCK) || level.getBlockState(this.blockPosition().below(1)).is(Blocks.PODZOL) || level.getBlockState(this.blockPosition().below(1)).is(Blocks.COARSE_DIRT) || level.getBlockState(this.blockPosition().below(1)).is(Blocks.ROOTED_DIRT))) {
+            if (a >= 8) {
+                level.setBlock(this.blockPosition().below(0), Blocks.DANDELION.defaultBlockState(), 1);
+            } else {
+                level.setBlock(this.blockPosition().below(0), Blocks.SUNFLOWER.defaultBlockState().setValue(BlockStateProperties.DOUBLE_BLOCK_HALF, DoubleBlockHalf.LOWER), 1);
+                level.setBlock(this.blockPosition().above(1), Blocks.SUNFLOWER.defaultBlockState().setValue(BlockStateProperties.DOUBLE_BLOCK_HALF, DoubleBlockHalf.UPPER), 1);
             }
         }
     }
@@ -176,7 +173,6 @@ public class MoobloomEntity extends Cow implements IForgeShearable {
                     return MoobloomEntity$FlowerType;
                 }
             }
-
             return BUTTERCUP;
         }
 
