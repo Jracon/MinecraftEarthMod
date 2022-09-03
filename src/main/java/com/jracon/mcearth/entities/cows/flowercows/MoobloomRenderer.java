@@ -10,6 +10,7 @@ import javax.annotation.Nonnull;
 public class MoobloomRenderer extends MobRenderer<MoobloomEntity, MoobloomModel<MoobloomEntity>> {
 
     private static final ResourceLocation TEXTURE = new ResourceLocation(MCEarth.MOD_ID, "textures/entity/moobloom.png");
+    private static final ResourceLocation SHEARED_TEXTURE = new ResourceLocation(MCEarth.MOD_ID, "textures/entity/moobloom_sheared.png");
 
     public MoobloomRenderer(EntityRendererProvider.Context context) {
         super(context, new MoobloomModel(context.bakeLayer(MoobloomModel.LAYER_LOCATION)), 0.7f);
@@ -18,6 +19,10 @@ public class MoobloomRenderer extends MobRenderer<MoobloomEntity, MoobloomModel<
     @Nonnull
     @Override
     public ResourceLocation getTextureLocation(MoobloomEntity entity) {
-        return TEXTURE;
-    }
+            if (entity.isSheared) {
+                return SHEARED_TEXTURE;
+            } else {
+                return TEXTURE;
+            }
+        }
 }

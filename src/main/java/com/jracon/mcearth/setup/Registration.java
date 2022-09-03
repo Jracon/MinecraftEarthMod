@@ -5,6 +5,7 @@ import com.jracon.mcearth.entities.chickens.CluckshroomEntity;
 import com.jracon.mcearth.entities.cows.flowercows.MoobloomEntity;
 import com.jracon.mcearth.entities.cows.flowercows.MoolipEntity;
 import com.jracon.mcearth.entities.pigs.MuddyPigEntity;
+import com.jracon.mcearth.entities.rabbits.JumboRabbitEntity;
 import com.jracon.mcearth.fluids.BaseFluidType;
 import com.jracon.mcearth.fluids.MudFluid;
 import com.jracon.mcearth.world.biomemods.MCEVegetalBiomeModifier;
@@ -104,6 +105,10 @@ public class Registration {
             .sized(0.9f, 0.9f)
             .setShouldReceiveVelocityUpdates(false)
             .build("muddy_pig"));
+    public static final RegistryObject<EntityType<JumboRabbitEntity>> JUMBO_RABBIT = ENTITIES.register("jumbo_rabbit", () -> EntityType.Builder.of(JumboRabbitEntity::new, MobCategory.CREATURE)
+            .sized(0.7f, 1.2f)
+            .setShouldReceiveVelocityUpdates(false)
+            .build("jumbo_rabbit"));
     //
 
     // Item Registry Objects
@@ -113,6 +118,7 @@ public class Registration {
     public static final RegistryObject<Item> MOOLIP_SPAWN_EGG = ITEMS.register("moolip_spawn_egg", () -> new ForgeSpawnEggItem(MOOLIP, 0xdb307b, 0x7a3653, new Item.Properties().tab(ModSetup.ITEM_GROUP)));
     public static final RegistryObject<Item> CLUCKSHROOM_SPAWN_EGG = ITEMS.register("cluckshroom_spawn_egg", () -> new ForgeSpawnEggItem(CLUCKSHROOM, 0xd41c20, 0xf59545, new Item.Properties().tab(ModSetup.ITEM_GROUP)));
     public static final RegistryObject<Item> MUDDY_PIG_SPAWN_EGG = ITEMS.register("muddy_pig_spawn_egg", () -> new ForgeSpawnEggItem(MUDDY_PIG, 0xd41c20, 0xf59545, new Item.Properties().tab(ModSetup.ITEM_GROUP)));
+    public static final RegistryObject<Item> JUMBO_RABBIT_SPAWN_EGG = ITEMS.register("jumbo_rabbit_spawn_egg", () -> new ForgeSpawnEggItem(JUMBO_RABBIT, 0xd41c20, 0xf59545, new Item.Properties().tab(ModSetup.ITEM_GROUP)));
     //
 
     // Tags

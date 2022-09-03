@@ -1,0 +1,12 @@
+{
+  "type": "forge:add_spawns",
+  "biomes": [
+    "minecraft:desert"
+  ],
+  "spawners": {
+    "type": "mcearth:jumbo_rabbit",
+    "weight": 4,
+    "minCount": 1,
+    "maxCount": 3
+  }
+}

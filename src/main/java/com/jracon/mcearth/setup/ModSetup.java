@@ -5,6 +5,7 @@ import com.jracon.mcearth.entities.chickens.CluckshroomEntity;
 import com.jracon.mcearth.entities.cows.flowercows.MoobloomEntity;
 import com.jracon.mcearth.entities.cows.flowercows.MoolipEntity;
 import com.jracon.mcearth.entities.pigs.MuddyPigEntity;
+import com.jracon.mcearth.entities.rabbits.JumboRabbitEntity;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -45,5 +46,6 @@ public class ModSetup {
         event.put(Registration.MOOLIP.get(), MoolipEntity.prepareAttributes().build());
         event.put(Registration.CLUCKSHROOM.get(), CluckshroomEntity.prepareAttributes().build());
         event.put(Registration.MUDDY_PIG.get(), MuddyPigEntity.prepareAttributes().build());
+        event.put(Registration.JUMBO_RABBIT.get(), JumboRabbitEntity.createAttributes().build());
     }
 }

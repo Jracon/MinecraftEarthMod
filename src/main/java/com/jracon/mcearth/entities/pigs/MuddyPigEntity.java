@@ -24,6 +24,7 @@ import java.util.EnumSet;
 
 public class MuddyPigEntity extends Pig {
     private static final Ingredient FOOD_ITEMS = Ingredient.of(Items.CARROT, Items.POTATO, Items.BEETROOT);
+    public boolean isMuddy;
 
     public MuddyPigEntity(EntityType<? extends MuddyPigEntity> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
@@ -48,6 +49,21 @@ public class MuddyPigEntity extends Pig {
         this.goalSelector.addGoal(6, new WaterAvoidingRandomStrollGoal(this, 1.0D));
         this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
+    }
+
+    public void tick() {
+        super.tick();
+        if (!this.level.isClientSide) {
+            this.tickLeash();
+            if (this.tickCount % 5 == 0) {
+                this.updateControlFlags();
+            }
+        }
+        if (level.getBlockState(this.blockPosition().below(0)).is(Registration.MUD_FLUID_BLOCK.get())) { //&& level.getBlockState(this.blockPosition().below(1)).is(Registration.MUD_FLUID_BLOCK.get())) {
+            isMuddy = true;
+        } else {
+            isMuddy = false;
+        }
     }
 
     @Nullable

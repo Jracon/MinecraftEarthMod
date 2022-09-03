@@ -8,6 +8,8 @@ import com.jracon.mcearth.entities.cows.flowercows.MoolipModel;
 import com.jracon.mcearth.entities.cows.flowercows.MoolipRenderer;
 import com.jracon.mcearth.entities.pigs.MuddyPigModel;
 import com.jracon.mcearth.entities.pigs.MuddyPigRenderer;
+import com.jracon.mcearth.entities.rabbits.JumboRabbitModel;
+import com.jracon.mcearth.entities.rabbits.JumboRabbitRenderer;
 import com.jracon.mcearth.fluids.MCEInteractionInformations;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
@@ -34,6 +36,7 @@ public class ClientSetup {
         event.registerLayerDefinition(MoolipModel.LAYER_LOCATION, MoolipModel::createBodyLayer);
         event.registerLayerDefinition(CluckshroomModel.LAYER_LOCATION, CluckshroomModel::createBodyLayer);
         event.registerLayerDefinition(MuddyPigModel.LAYER_LOCATION, MuddyPigModel::createBodyLayer);
+        event.registerLayerDefinition(JumboRabbitModel.LAYER_LOCATION, JumboRabbitModel::createBodyLayer);
     }
 
     @SubscribeEvent
@@ -42,5 +45,6 @@ public class ClientSetup {
         event.registerEntityRenderer(Registration.MOOLIP.get(), MoolipRenderer::new);
         event.registerEntityRenderer(Registration.CLUCKSHROOM.get(), CluckshroomRenderer::new);
         event.registerEntityRenderer(Registration.MUDDY_PIG.get(), MuddyPigRenderer::new);
+        event.registerEntityRenderer(Registration.JUMBO_RABBIT.get(), JumboRabbitRenderer::new);
     }
 }

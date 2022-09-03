@@ -19,11 +19,13 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.animal.Cow;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
@@ -39,9 +41,24 @@ import java.util.Random;
 
 public class MoobloomEntity extends Cow implements IForgeShearable {
     private static final EntityDataAccessor<String> DATA_TYPE = SynchedEntityData.defineId(MoobloomEntity.class, EntityDataSerializers.STRING);
+    public boolean isSheared;
+    private EatBlockGoal eatBlockGoal;
 
     public MoobloomEntity(EntityType<? extends MoobloomEntity> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
+    }
+
+    protected void registerGoals() {
+        this.eatBlockGoal = new EatBlockGoal(this);
+        this.goalSelector.addGoal(0, new FloatGoal(this));
+        this.goalSelector.addGoal(1, new PanicGoal(this, 2.0D));
+        this.goalSelector.addGoal(2, new BreedGoal(this, 1.0D));
+        this.goalSelector.addGoal(3, new TemptGoal(this, 1.25D, Ingredient.of(Items.WHEAT), false));
+        this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.25D));
+        this.goalSelector.addGoal(5, this.eatBlockGoal);
+        this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1.0D));
+        this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 6.0F));
+        this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
     }
 
     public static boolean checkFlowerSpawnRules(EntityType<MoobloomEntity> pMoobloomEntity, LevelAccessor pLevel, MobSpawnType pSpawnType, BlockPos pPos, RandomSource pRandomSource) {
@@ -53,6 +70,11 @@ public class MoobloomEntity extends Cow implements IForgeShearable {
                 .add(Attributes.MAX_HEALTH, 10.0D)
                 .add(Attributes.MOVEMENT_SPEED, (double) 0.2F)
                 .add(Attributes.FOLLOW_RANGE, 32);
+    }
+
+    public void ate() {
+        super.ate();
+        this.isSheared = false;
     }
 
     public void tick() {
@@ -71,6 +93,9 @@ public class MoobloomEntity extends Cow implements IForgeShearable {
                 level.setBlock(this.blockPosition().below(0), Blocks.SUNFLOWER.defaultBlockState().setValue(BlockStateProperties.DOUBLE_BLOCK_HALF, DoubleBlockHalf.LOWER), 1);
                 level.setBlock(this.blockPosition().above(1), Blocks.SUNFLOWER.defaultBlockState().setValue(BlockStateProperties.DOUBLE_BLOCK_HALF, DoubleBlockHalf.UPPER), 1);
             }
+        }
+        if (!readyForShearing()) {
+            this.isSheared = true;
         }
     }
 
@@ -104,10 +129,12 @@ public class MoobloomEntity extends Cow implements IForgeShearable {
     @Override
     public java.util.List<ItemStack> onSheared(@org.jetbrains.annotations.Nullable Player player, @org.jetbrains.annotations.NotNull ItemStack item, Level world, BlockPos pos, int fortune) {
         this.gameEvent(GameEvent.SHEAR, player);
+        this.isSheared = true;
         return shearInternal(player == null ? SoundSource.BLOCKS : SoundSource.PLAYERS);
     }
 
     public void shear(SoundSource pCategory) {
+        this.isSheared = true;
         shearInternal(pCategory).forEach(s -> this.level.addFreshEntity(new ItemEntity(this.level, this.getX(), this.getY(1.0D), this.getZ(), s)));
     }
 
@@ -120,11 +147,12 @@ public class MoobloomEntity extends Cow implements IForgeShearable {
             }
             return items;
         }
+        this.isSheared = true;
         return java.util.Collections.emptyList();
     }
 
     public boolean readyForShearing() {
-        return this.isAlive();
+        return this.isAlive() && !this.isSheared;
     }
 
     public void addAdditionalSaveData(CompoundTag pCompound) {

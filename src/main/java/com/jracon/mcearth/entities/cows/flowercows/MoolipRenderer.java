@@ -10,6 +10,7 @@ import javax.annotation.Nonnull;
 public class MoolipRenderer extends MobRenderer<MoolipEntity, MoolipModel<MoolipEntity>> {
 
     private static final ResourceLocation TEXTURE = new ResourceLocation(MCEarth.MOD_ID, "textures/entity/moolip.png");
+    private static final ResourceLocation SHEARED_TEXTURE = new ResourceLocation(MCEarth.MOD_ID, "textures/entity/moolip_sheared.png");
 
     public MoolipRenderer(EntityRendererProvider.Context context) {
         super(context, new MoolipModel(context.bakeLayer(MoolipModel.LAYER_LOCATION)), 0.7f);
@@ -18,6 +19,10 @@ public class MoolipRenderer extends MobRenderer<MoolipEntity, MoolipModel<Moolip
     @Nonnull
     @Override
     public ResourceLocation getTextureLocation(MoolipEntity entity) {
-        return TEXTURE;
+        if (entity.isSheared) {
+            return SHEARED_TEXTURE;
+        } else {
+            return TEXTURE;
+        }
     }
 }
