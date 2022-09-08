@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "mcearth:rainbow_wool"
+        }
+      ],
+      "name": "rainbow_wool",
+      "rolls": 1.0
+    }
+  ]
+}

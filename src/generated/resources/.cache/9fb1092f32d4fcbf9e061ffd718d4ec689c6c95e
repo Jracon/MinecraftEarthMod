@@ -1,3 +1,7 @@
-// 1.19.2	2022-09-01T12:07:09.2922434	Recipes
+// 1.19.2	2022-09-07T14:17:20.5865547	Recipes
 185bc6ac698f41bf3a6b1901e31fbd8c8e3669e5 data/mcearth/advancements/recipes/mcearth/mud_bucket.json
+86c4ebdbe18c299d1367d4ff63db57cc267473f5 data/mcearth/advancements/recipes/mcearth/rainbow_carpet.json
+08397395e291cd75ccfb831a74e8611769da2725 data/mcearth/advancements/recipes/mcearth/rainbow_wool.json
 e8e0683f8b3f2be97b3e8f28f614f574f0340a08 data/mcearth/recipes/mud_bucket.json
+a78725bf2a556e575378a5eafc220ea7131ec629 data/mcearth/recipes/rainbow_carpet.json
+b829a1c83b770afb28963edab0ba012a576820a1 data/mcearth/recipes/rainbow_wool.json

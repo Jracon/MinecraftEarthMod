@@ -9,11 +9,11 @@ import javax.annotation.Nonnull;
 
 public class MoolipRenderer extends MobRenderer<MoolipEntity, MoolipModel<MoolipEntity>> {
 
-    private static final ResourceLocation TEXTURE = new ResourceLocation(MCEarth.MOD_ID, "textures/entity/moolip.png");
-    private static final ResourceLocation SHEARED_TEXTURE = new ResourceLocation(MCEarth.MOD_ID, "textures/entity/moolip_sheared.png");
+    private static final ResourceLocation TEXTURE = new ResourceLocation(MCEarth.MOD_ID, "textures/entity/cows/flowercows/moolip.png");
+    private static final ResourceLocation SHEARED_TEXTURE = new ResourceLocation(MCEarth.MOD_ID, "textures/entity/cows/flowercows/moolip_sheared.png");
 
     public MoolipRenderer(EntityRendererProvider.Context context) {
-        super(context, new MoolipModel(context.bakeLayer(MoolipModel.LAYER_LOCATION)), 0.7f);
+        super(context, new MoolipModel<>(context.bakeLayer(MoolipModel.LAYER_LOCATION)), 0.7f);
     }
 
     @Nonnull

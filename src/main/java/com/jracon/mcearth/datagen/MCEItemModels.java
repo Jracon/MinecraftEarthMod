@@ -14,13 +14,20 @@ public class MCEItemModels extends ItemModelProvider {
 
     @Override
     protected void registerModels() {
+        withExistingParent(Registration.RAINBOW_CARPET.getId().getPath(), modLoc("block/rainbow_carpet"));
+        withExistingParent(Registration.RAINBOW_WOOL.getId().getPath(), modLoc("block/rainbow_wool"));
+        withExistingParent(Registration.RAINBOW_BED.getId().getPath(), modLoc("block/rainbow_bed"));
+
         withExistingParent(Registration.MOOBLOOM_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(Registration.MOOLIP_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(Registration.CLUCKSHROOM_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(Registration.MUDDY_PIG_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(Registration.JUMBO_RABBIT_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+
         singleTexture(Registration.BUTTERCUP.getId().getPath(), mcLoc("item/generated"), "layer0", modLoc("block/buttercup"));
         singleTexture(Registration.PINK_DAISY.getId().getPath(), mcLoc("item/generated"), "layer0", modLoc("block/pink_daisy"));
         singleTexture(Registration.MUD_BUCKET.getId().getPath(), mcLoc("item/generated"), "layer0", modLoc("item/mud_bucket"));
+        singleTexture(Registration.FANCY_FEATHER.getId().getPath(), mcLoc("item/generated"), "layer0", modLoc("item/fancy_feather"));
+        singleTexture(Registration.HORN.getId().getPath(), mcLoc("item/generated"), "layer0", modLoc("item/horn"));
     }
 }

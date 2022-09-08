@@ -48,11 +48,6 @@ public class MoolipEntity extends Cow implements IForgeShearable {
         super(pEntityType, pLevel);
     }
 
-    public static boolean checkFlowerSpawnRules(EntityType<MoolipEntity> pMoolipEntity, LevelAccessor pLevel, MobSpawnType pSpawnType, BlockPos pPos, RandomSource pRandomSource) {
-        return pLevel.getBlockState(pPos.below()).is(BlockTags.ANIMALS_SPAWNABLE_ON) && isBrightEnoughToSpawn(pLevel, pPos);
-    }
-
-
     protected void registerGoals() {
         this.eatBlockGoal = new EatBlockGoal(this);
         this.goalSelector.addGoal(0, new FloatGoal(this));
@@ -64,13 +59,6 @@ public class MoolipEntity extends Cow implements IForgeShearable {
         this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1.0D));
         this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
-    }
-
-    public static AttributeSupplier.Builder prepareAttributes() {
-        return LivingEntity.createLivingAttributes()
-                .add(Attributes.MAX_HEALTH, 10.0D)
-                .add(Attributes.MOVEMENT_SPEED, (double) 0.2F)
-                .add(Attributes.FOLLOW_RANGE, 32);
     }
 
     public float getWalkTargetValue(BlockPos pPos, LevelReader pLevel) {
@@ -110,7 +98,7 @@ public class MoolipEntity extends Cow implements IForgeShearable {
         }
         int a = new Random().nextInt(10);
         int b = new Random().nextInt(10);
-        if (level.getBlockState(this.blockPosition().below(0)).getProperties().isEmpty() && (level.getBlockState(this.blockPosition().below(1)).is(Blocks.DIRT) || level.getBlockState(this.blockPosition().below(1)).is(Blocks.GRASS_BLOCK) || level.getBlockState(this.blockPosition().below(1)).is(Blocks.PODZOL) || level.getBlockState(this.blockPosition().below(1)).is(Blocks.COARSE_DIRT) || level.getBlockState(this.blockPosition().below(1)).is(Blocks.ROOTED_DIRT))) {
+        if (level.getBlockState(this.blockPosition().below(0)).getProperties().isEmpty() && level.getBlockState(this.blockPosition().above(1)).getProperties().isEmpty() && (level.getBlockState(this.blockPosition().below(1)).is(Blocks.DIRT) || level.getBlockState(this.blockPosition().below(1)).is(Blocks.GRASS_BLOCK) || level.getBlockState(this.blockPosition().below(1)).is(Blocks.PODZOL) || level.getBlockState(this.blockPosition().below(1)).is(Blocks.COARSE_DIRT) || level.getBlockState(this.blockPosition().below(1)).is(Blocks.ROOTED_DIRT))) {
             if (a >= 4) {
                 level.setBlock(this.blockPosition().below(0), Blocks.ALLIUM.defaultBlockState(), 1);
             } else if (b >= 4) {

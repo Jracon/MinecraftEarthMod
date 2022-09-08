@@ -5,20 +5,20 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-
+import org.jetbrains.annotations.NotNull;
 import javax.annotation.Nonnull;
 
 public class CluckshroomRenderer extends MobRenderer<CluckshroomEntity, CluckshroomModel<CluckshroomEntity>> {
 
-    private static final ResourceLocation TEXTURE = new ResourceLocation(MCEarth.MOD_ID, "textures/entity/cluckshroom.png");
+    private static final ResourceLocation TEXTURE = new ResourceLocation(MCEarth.MOD_ID, "textures/entity/chickens/cluckshroom.png");
 
     public CluckshroomRenderer(EntityRendererProvider.Context context) {
-        super(context, new CluckshroomModel(context.bakeLayer(CluckshroomModel.LAYER_LOCATION)), 0.3f);
+        super(context, new CluckshroomModel<>(context.bakeLayer(CluckshroomModel.LAYER_LOCATION)), 0.3f);
     }
 
     @Nonnull
     @Override
-    public ResourceLocation getTextureLocation(CluckshroomEntity entity) {
+    public ResourceLocation getTextureLocation(@NotNull CluckshroomEntity entity) {
         return TEXTURE;
     }
 

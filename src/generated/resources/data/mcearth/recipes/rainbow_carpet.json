@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "mcearth",
+  "key": {
+    "w": {
+      "item": "mcearth:rainbow_wool"
+    }
+  },
+  "pattern": [
+    "ww"
+  ],
+  "result": {
+    "item": "mcearth:rainbow_carpet"
+  }
+}

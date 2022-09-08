@@ -16,5 +16,6 @@ public class MCEBlockStates extends BlockStateProvider {
     protected void registerStatesAndModels() {
         simpleBlock(Registration.BUTTERCUP.get(), models().cross("buttercup", modLoc("block/buttercup")).renderType("cutout"));
         simpleBlock(Registration.PINK_DAISY.get(), models().cross("pink_daisy", modLoc("block/pink_daisy")).renderType("cutout"));
+        simpleBlock(Registration.RAINBOW_WOOL.get(), models().cube("rainbow_wool", modLoc("block/rainbow_wool_down"), modLoc("block/rainbow_wool_up"), modLoc("block/rainbow_wool_north"), modLoc("block/rainbow_wool_south"), modLoc("block/rainbow_wool_east"), modLoc("block/rainbow_wool_west")));
     }
 }

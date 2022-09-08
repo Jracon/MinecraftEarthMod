@@ -15,7 +15,7 @@ apply plugin: 'org.parchmentmc.librarian.forgegradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = '0.1.0'
+version = '0.4.0'
 group = 'com.jracon.mcearth' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'mcearth'
 
@@ -116,12 +116,12 @@ repositories {
     // Put repositories for dependencies here
     // ForgeGradle automatically adds the Forge maven and Maven Central for you
 
-    maven { // JEI
-        url "https://dvs1.progwml6.com/files/maven"
-    }
-    maven { // TOP
-        url "https://maven.k-4u.nl"
-    }
+    //maven { // JEI
+    //    url "https://dvs1.progwml6.com/files/maven"
+    //}
+    //maven { // TOP
+    //    url "https://maven.k-4u.nl"
+    //}
 }
 
 dependencies {
@@ -131,14 +131,14 @@ dependencies {
     minecraft 'net.minecraftforge:forge:1.19.2-43.1.1'
 
     // compile against the JEI API but do not include it at runtime
-    compileOnly fg.deobf("mezz.jei:jei-1.19.1-common-api:${jei_version}")
-    compileOnly fg.deobf("mezz.jei:jei-1.19.1-forge-api:${jei_version}")
+    //compileOnly fg.deobf("mezz.jei:jei-1.19.1-common-api:${jei_version}")
+    //compileOnly fg.deobf("mezz.jei:jei-1.19.1-forge-api:${jei_version}")
     // at runtime, use the full JEI jar for Forge
-    runtimeOnly fg.deobf("mezz.jei:jei-1.19.1-forge:${jei_version}")
+    //runtimeOnly fg.deobf("mezz.jei:jei-1.19.1-forge:${jei_version}")
 
-    implementation fg.deobf(project.dependencies.create("mcjty.theoneprobe:theoneprobe:${top_version}") {
-        transitive = false
-    })
+   // implementation fg.deobf(project.dependencies.create("mcjty.theoneprobe:theoneprobe:${top_version}") {
+   //     transitive = false
+   // })
 }
 
 // Example for how to get properties into the manifest for reading at runtime.

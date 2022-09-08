@@ -1,0 +1,12 @@
+{
+  "type": "forge:add_spawns",
+  "biomes": [
+    "minecraft:swamp"
+  ],
+  "spawners": {
+    "type": "mcearth:spotted_pig",
+    "weight": 5,
+    "minCount": 4,
+    "maxCount": 4
+  }
+}

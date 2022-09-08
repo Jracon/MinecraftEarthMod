@@ -59,7 +59,7 @@ public class MuddyPigEntity extends Pig {
                 this.updateControlFlags();
             }
         }
-        if (level.getBlockState(this.blockPosition().below(0)).is(Registration.MUD_FLUID_BLOCK.get())) { //&& level.getBlockState(this.blockPosition().below(1)).is(Registration.MUD_FLUID_BLOCK.get())) {
+        if (this.isInFluidType(Registration.MUD_FLUID_TYPE.get())) {
             isMuddy = true;
         } else {
             isMuddy = false;

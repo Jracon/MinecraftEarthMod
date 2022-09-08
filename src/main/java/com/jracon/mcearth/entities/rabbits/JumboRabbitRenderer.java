@@ -9,7 +9,7 @@ import javax.annotation.Nonnull;
 
 public class JumboRabbitRenderer extends MobRenderer<JumboRabbitEntity, JumboRabbitModel<JumboRabbitEntity>> {
 
-    private static final ResourceLocation TEXTURE = new ResourceLocation(MCEarth.MOD_ID, "textures/entity/jumbo_rabbit.png");
+    private static final ResourceLocation TEXTURE = new ResourceLocation(MCEarth.MOD_ID, "textures/entity/rabbits/jumbo_rabbit.png");
 
     public JumboRabbitRenderer(EntityRendererProvider.Context context) {
         super(context, new JumboRabbitModel<>(context.bakeLayer(JumboRabbitModel.LAYER_LOCATION)), 0.7f);

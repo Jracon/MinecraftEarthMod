@@ -28,32 +28,26 @@ public abstract class MudFluid extends WaterFluid {
         super();
     }
 
-    @Override
     public @NotNull Fluid getFlowing() {
         return Registration.FLOWING_MUD_FLUID.get();
     }
 
-    @Override
     public @NotNull Fluid getSource() {
         return Registration.SOURCE_MUD_FLUID.get();
     }
 
-    @Override
     public @NotNull FluidType getFluidType() {
         return Registration.MUD_FLUID_TYPE.get();
     }
 
-    @Override
     public @NotNull Item getBucket() {
         return Registration.MUD_BUCKET.get();
     }
 
-    @Override
     public int getTickDelay(@NotNull LevelReader level) {
         return 20;
     }
 
-    @Override
     protected boolean isRandomlyTicking() {
         return true;
     }
@@ -78,7 +72,6 @@ public abstract class MudFluid extends WaterFluid {
         return 4;
     }
 
-    @Override
     protected int getSlopeDistance(@NotNull LevelReader levelReader, @NotNull BlockPos blockPos, int i, @NotNull Direction direction, @NotNull BlockState blockState, @NotNull BlockPos blockPos1, @NotNull Short2ObjectMap<Pair<BlockState, FluidState>> pairShort2ObjectMap, @NotNull Short2BooleanMap short2BooleanMap) {
         return 1;
     }

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "mcearth",
+  "key": {
+    "p": {
+      "item": "minecraft:acacia_planks"
+    },
+    "w": {
+      "item": "mcearth:rainbow_wool"
+    }
+  },
+  "pattern": [
+    "www",
+    "ppp"
+  ],
+  "result": {
+    "item": "mcearth:rainbow_wool"
+  }
+}

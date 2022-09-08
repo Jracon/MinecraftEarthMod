@@ -1,9 +1,14 @@
-// 1.19.2	2022-09-03T12:17:49.4638738	Item Models: mcearth
+// 1.19.2	2022-09-05T20:43:37.5889513	Item Models: mcearth
 f6da54615fce792c1d833860e1361caaedc97ce3 assets/mcearth/models/item/buttercup.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/mcearth/models/item/cluckshroom_spawn_egg.json
+3f28952d30a03fd139fc6f251a992b4b3d18b72e assets/mcearth/models/item/fancy_feather.json
+d2dd010e7874acf7df47039afd3cef4dfe165529 assets/mcearth/models/item/horn.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/mcearth/models/item/jumbo_rabbit_spawn_egg.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/mcearth/models/item/moobloom_spawn_egg.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/mcearth/models/item/moolip_spawn_egg.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/mcearth/models/item/muddy_pig_spawn_egg.json
 85c5cf8d978c8759363463c37906b131435f6508 assets/mcearth/models/item/mud_bucket.json
 18d5b7448984803c225d54577d02a20db83d843e assets/mcearth/models/item/pink_daisy.json
+693cce76c006e2c2fab416c964bbf952c065f53b assets/mcearth/models/item/rainbow_bed.json
+7ab823efc4c3a7e2b82fdd8a7c274b39f5fe8215 assets/mcearth/models/item/rainbow_carpet.json
+078659a43aab8f654cc612cc44acac666f73f3e7 assets/mcearth/models/item/rainbow_wool.json

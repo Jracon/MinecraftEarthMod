@@ -9,25 +9,17 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.animal.Cow;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -35,6 +27,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraftforge.common.IForgeShearable;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.Random;
@@ -42,39 +35,31 @@ import java.util.Random;
 public class MoobloomEntity extends Cow implements IForgeShearable {
     private static final EntityDataAccessor<String> DATA_TYPE = SynchedEntityData.defineId(MoobloomEntity.class, EntityDataSerializers.STRING);
     public boolean isSheared;
-    private EatBlockGoal eatBlockGoal;
 
     public MoobloomEntity(EntityType<? extends MoobloomEntity> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
     }
 
     protected void registerGoals() {
-        this.eatBlockGoal = new EatBlockGoal(this);
+        EatBlockGoal eatBlockGoal = new EatBlockGoal(this);
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new PanicGoal(this, 2.0D));
         this.goalSelector.addGoal(2, new BreedGoal(this, 1.0D));
         this.goalSelector.addGoal(3, new TemptGoal(this, 1.25D, Ingredient.of(Items.WHEAT), false));
         this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.25D));
-        this.goalSelector.addGoal(5, this.eatBlockGoal);
+        this.goalSelector.addGoal(5, eatBlockGoal);
         this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1.0D));
         this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
     }
 
-    public static boolean checkFlowerSpawnRules(EntityType<MoobloomEntity> pMoobloomEntity, LevelAccessor pLevel, MobSpawnType pSpawnType, BlockPos pPos, RandomSource pRandomSource) {
-        return pLevel.getBlockState(pPos.below()).is(BlockTags.ANIMALS_SPAWNABLE_ON) && isBrightEnoughToSpawn(pLevel, pPos);
-    }
-
-    public static AttributeSupplier.Builder prepareAttributes() {
-        return LivingEntity.createLivingAttributes()
-                .add(Attributes.MAX_HEALTH, 10.0D)
-                .add(Attributes.MOVEMENT_SPEED, (double) 0.2F)
-                .add(Attributes.FOLLOW_RANGE, 32);
-    }
-
     public void ate() {
         super.ate();
-        this.isSheared = false;
+        this.setSheared(false);
+    }
+
+    public void setSheared(boolean pSheared) {
+        this.isSheared = pSheared;
     }
 
     public void tick() {
@@ -86,16 +71,13 @@ public class MoobloomEntity extends Cow implements IForgeShearable {
             }
         }
         int a = new Random().nextInt(10);
-        if (level.getBlockState(this.blockPosition().below(0)).getProperties().isEmpty() && (level.getBlockState(this.blockPosition().below(1)).is(Blocks.DIRT) || level.getBlockState(this.blockPosition().below(1)).is(Blocks.GRASS_BLOCK) || level.getBlockState(this.blockPosition().below(1)).is(Blocks.PODZOL) || level.getBlockState(this.blockPosition().below(1)).is(Blocks.COARSE_DIRT) || level.getBlockState(this.blockPosition().below(1)).is(Blocks.ROOTED_DIRT))) {
+        if (level.getBlockState(this.blockPosition().below(0)).getProperties().isEmpty() && level.getBlockState(this.blockPosition().above(1)).getProperties().isEmpty() && (level.getBlockState(this.blockPosition().below(1)).is(Blocks.DIRT) || level.getBlockState(this.blockPosition().below(1)).is(Blocks.GRASS_BLOCK) || level.getBlockState(this.blockPosition().below(1)).is(Blocks.PODZOL) || level.getBlockState(this.blockPosition().below(1)).is(Blocks.COARSE_DIRT) || level.getBlockState(this.blockPosition().below(1)).is(Blocks.ROOTED_DIRT))) {
             if (a >= 8) {
                 level.setBlock(this.blockPosition().below(0), Blocks.DANDELION.defaultBlockState(), 1);
             } else {
                 level.setBlock(this.blockPosition().below(0), Blocks.SUNFLOWER.defaultBlockState().setValue(BlockStateProperties.DOUBLE_BLOCK_HALF, DoubleBlockHalf.LOWER), 1);
                 level.setBlock(this.blockPosition().above(1), Blocks.SUNFLOWER.defaultBlockState().setValue(BlockStateProperties.DOUBLE_BLOCK_HALF, DoubleBlockHalf.UPPER), 1);
             }
-        }
-        if (!readyForShearing()) {
-            this.isSheared = true;
         }
     }
 
@@ -108,46 +90,22 @@ public class MoobloomEntity extends Cow implements IForgeShearable {
         this.entityData.define(DATA_TYPE, FlowerType.BUTTERCUP.type);
     }
 
-    @Override
-    public InteractionResult mobInteract(Player pPlayer, InteractionHand pHand) {
-        ItemStack itemstack = pPlayer.getItemInHand(pHand);
-        if (false && itemstack.getItem() == Items.SHEARS && this.readyForShearing()) { //Forge: Moved to onSheared
-            this.shear(SoundSource.PLAYERS);
-            this.gameEvent(GameEvent.SHEAR, pPlayer);
-            if (!this.level.isClientSide) {
-                itemstack.hurtAndBreak(1, pPlayer, (p_28927_) -> {
-                    p_28927_.broadcastBreakEvent(pHand);
-                });
-            }
-
-            return InteractionResult.sidedSuccess(this.level.isClientSide);
-        } else {
-            return super.mobInteract(pPlayer, pHand);
-        }
+    public @NotNull InteractionResult mobInteract(@NotNull Player pPlayer, @NotNull InteractionHand pHand) {
+        return super.mobInteract(pPlayer, pHand);
     }
 
-    @Override
-    public java.util.List<ItemStack> onSheared(@org.jetbrains.annotations.Nullable Player player, @org.jetbrains.annotations.NotNull ItemStack item, Level world, BlockPos pos, int fortune) {
+    public java.util.@NotNull List<ItemStack> onSheared(@Nullable Player player, @org.jetbrains.annotations.NotNull ItemStack item, Level world, BlockPos pos, int fortune) {
+        world.playSound(null, this, SoundEvents.MOOSHROOM_SHEAR, player == null ? SoundSource.BLOCKS : SoundSource.PLAYERS, 1.0F, 1.0F);
         this.gameEvent(GameEvent.SHEAR, player);
-        this.isSheared = true;
-        return shearInternal(player == null ? SoundSource.BLOCKS : SoundSource.PLAYERS);
-    }
-
-    public void shear(SoundSource pCategory) {
-        this.isSheared = true;
-        shearInternal(pCategory).forEach(s -> this.level.addFreshEntity(new ItemEntity(this.level, this.getX(), this.getY(1.0D), this.getZ(), s)));
-    }
-
-    private java.util.List<ItemStack> shearInternal(SoundSource pCategory) {
-        this.level.playSound((Player) null, this, SoundEvents.MOOSHROOM_SHEAR, pCategory, 1.0F, 1.0F);
-        if (!this.level.isClientSide()) {
+        if (!world.isClientSide) {
+            this.setSheared(true);
+            int i = 1;
             java.util.List<ItemStack> items = new java.util.ArrayList<>();
-            for (int i = 0; i < 1; ++i) {
+            for (int j = 0; j < i; ++j) {
                 items.add(new ItemStack(this.getFlowerType().blockState.getBlock()));
             }
             return items;
         }
-        this.isSheared = true;
         return java.util.Collections.emptyList();
     }
 
@@ -155,13 +113,15 @@ public class MoobloomEntity extends Cow implements IForgeShearable {
         return this.isAlive() && !this.isSheared;
     }
 
-    public void addAdditionalSaveData(CompoundTag pCompound) {
+    public void addAdditionalSaveData(@NotNull CompoundTag pCompound) {
         super.addAdditionalSaveData(pCompound);
+        pCompound.putBoolean("Sheared", this.isSheared);
         pCompound.putString("Type", this.getFlowerType().type);
     }
 
-    public void readAdditionalSaveData(CompoundTag pCompound) {
+    public void readAdditionalSaveData(@NotNull CompoundTag pCompound) {
         super.readAdditionalSaveData(pCompound);
+        this.setSheared(pCompound.getBoolean("Sheared"));
         this.setFlowerType(MoobloomEntity.FlowerType.byType(pCompound.getString("Type")));
     }
 
@@ -173,24 +133,20 @@ public class MoobloomEntity extends Cow implements IForgeShearable {
         this.entityData.set(DATA_TYPE, pType.type);
     }
 
-    @Nullable
-    @Override
-    public MoobloomEntity getBreedOffspring(ServerLevel pLevel, AgeableMob pOtherParent) {
+    public MoobloomEntity getBreedOffspring(@NotNull ServerLevel pLevel, @NotNull AgeableMob pOtherParent) {
         return null;
     }
 
-    @Override
     public boolean isShearable(@org.jetbrains.annotations.NotNull ItemStack item, Level world, BlockPos pos) {
         return readyForShearing();
     }
 
     public enum FlowerType {
         BUTTERCUP("buttercup", Registration.BUTTERCUP.get().defaultBlockState());
-
         final String type;
         final BlockState blockState;
 
-        private FlowerType(String pType, BlockState pBlockState) {
+        FlowerType(String pType, BlockState pBlockState) {
             this.type = pType;
             this.blockState = pBlockState;
         }
@@ -202,10 +158,6 @@ public class MoobloomEntity extends Cow implements IForgeShearable {
                 }
             }
             return BUTTERCUP;
-        }
-
-        public BlockState getBlockState() {
-            return this.blockState;
         }
     }
 }

@@ -1,0 +1,11 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "mcearth:block/rainbow_wool_down",
+    "east": "mcearth:block/rainbow_wool_east",
+    "north": "mcearth:block/rainbow_wool_north",
+    "south": "mcearth:block/rainbow_wool_south",
+    "up": "mcearth:block/rainbow_wool_up",
+    "west": "mcearth:block/rainbow_wool_west"
+  }
+}

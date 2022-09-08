@@ -13,5 +13,7 @@ public class MCELootTables extends BaseLootTableProvider {
     protected void addTables() {
         lootTables.put(Registration.BUTTERCUP.get(), createSimpleTable("buttercup", Registration.BUTTERCUP.get()));
         lootTables.put(Registration.PINK_DAISY.get(), createSimpleTable("pink_daisy", Registration.PINK_DAISY.get()));
+        lootTables.put(Registration.RAINBOW_CARPET.get(), createSimpleTable("rainbow_carpet", Registration.RAINBOW_CARPET.get()));
+        lootTables.put(Registration.RAINBOW_WOOL.get(), createSimpleTable("rainbow_wool", Registration.RAINBOW_WOOL.get()));
     }
 }
