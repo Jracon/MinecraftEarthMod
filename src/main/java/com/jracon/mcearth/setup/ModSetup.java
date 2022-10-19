@@ -51,26 +51,14 @@ public class ModSetup {
     public static void onAttributeCreate(EntityAttributeCreationEvent event) {
 
         // Chickens
-        event.put(Registration.AMBER_CHICKEN.get(), GenericChickenEntity.createAttributes().build());
-        event.put(Registration.BRONZED_CHICKEN.get(), GenericChickenEntity.createAttributes().build());
-        event.put(Registration.GOLD_CRESTED_CHICKEN.get(), GenericChickenEntity.createAttributes().build());
-        event.put(Registration.MIDNIGHT_CHICKEN.get(), GenericChickenEntity.createAttributes().build());
-        event.put(Registration.SKEWBALD_CHICKEN.get(), GenericChickenEntity.createAttributes().build());
-        event.put(Registration.STORMY_CHICKEN.get(), GenericChickenEntity.createAttributes().build());
+        event.put(Registration.GENERIC_CHICKEN.get(), GenericChickenEntity.createAttributes().build());
 
         event.put(Registration.CLUCKSHROOM.get(), CluckshroomEntity.prepareAttributes().build());
         event.put(Registration.FANCY_CHICKEN.get(), FancyChickenEntity.createAttributes().build());
         //
 
         // Cows
-        event.put(Registration.ALBINO_COW.get(), GenericCowEntity.createAttributes().build());
-        event.put(Registration.ASHEN_COW.get(), GenericCowEntity.createAttributes().build());
-        event.put(Registration.COOKIE_COW.get(), GenericCowEntity.createAttributes().build());
-        event.put(Registration.PINTO_COW.get(), GenericCowEntity.createAttributes().build());
-        event.put(Registration.SUNSET_COW.get(), GenericCowEntity.createAttributes().build());
-
-        event.put(Registration.CREAM_COW.get(), GenericCowEntity.createAttributes().build());
-        event.put(Registration.DAIRY_COW.get(), GenericCowEntity.createAttributes().build());
+        event.put(Registration.GENERIC_COW.get(), GenericCowEntity.createAttributes().build());
 
         event.put(Registration.MOOBLOOM.get(), MoobloomEntity.createAttributes().build());
         event.put(Registration.MOOLIP.get(), MoolipEntity.createAttributes().build());

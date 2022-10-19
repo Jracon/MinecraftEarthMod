@@ -1,6 +1,7 @@
 package com.jracon.mcearth.setup;
 
 import com.jracon.mcearth.MCEarth;
+import com.jracon.mcearth.entities.chickens.AmberChickenEntity;
 import com.jracon.mcearth.entities.chickens.CluckshroomEntity;
 import com.jracon.mcearth.entities.chickens.FancyChickenEntity;
 import com.jracon.mcearth.entities.chickens.GenericChickenEntity;
@@ -22,19 +23,14 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.animal.Rabbit;
 import net.minecraft.world.item.*;
-import net.minecraft.world.level.BlockAndTintGetter;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -110,79 +106,40 @@ public class Registration {
             MudFluid.Source::new);
     //
 
-    // Generic Chicken Registry Objects
-    public static final RegistryObject<EntityType<GenericChickenEntity>> AMBER_CHICKEN = ENTITIES.register("amber_chicken", () -> EntityType.Builder.of(GenericChickenEntity::new, MobCategory.CREATURE)
+    // Chicken Registry Objects
+    public static final RegistryObject<EntityType<GenericChickenEntity>> GENERIC_CHICKEN = ENTITIES.register("generic_chicken", () -> EntityType.Builder.of(GenericChickenEntity::new, MobCategory.CREATURE)
             .sized(0.4f, 0.7f)
             .setShouldReceiveVelocityUpdates(false)
-            .build("amber_chicken"));
-    public static final RegistryObject<EntityType<GenericChickenEntity>> BRONZED_CHICKEN = ENTITIES.register("bronzed_chicken", () -> EntityType.Builder.of(GenericChickenEntity::new, MobCategory.CREATURE)
-            .sized(0.4f, 0.7f)
-            .setShouldReceiveVelocityUpdates(false)
-            .build("bronzed_chicken"));
-    public static final RegistryObject<EntityType<GenericChickenEntity>> GOLD_CRESTED_CHICKEN = ENTITIES.register("gold_crested_chicken", () -> EntityType.Builder.of(GenericChickenEntity::new, MobCategory.CREATURE)
-            .sized(0.4f, 0.7f)
-            .setShouldReceiveVelocityUpdates(false)
-            .build("gold_crested_chicken"));
-    public static final RegistryObject<EntityType<GenericChickenEntity>> MIDNIGHT_CHICKEN = ENTITIES.register("midnight_chicken", () -> EntityType.Builder.of(GenericChickenEntity::new, MobCategory.CREATURE)
-            .sized(0.4f, 0.7f)
-            .setShouldReceiveVelocityUpdates(false)
-            .build("midnight_chicken"));
-    public static final RegistryObject<EntityType<GenericChickenEntity>> SKEWBALD_CHICKEN = ENTITIES.register("skewbald_chicken", () -> EntityType.Builder.of(GenericChickenEntity::new, MobCategory.CREATURE)
-            .sized(0.4f, 0.7f)
-            .setShouldReceiveVelocityUpdates(false)
-            .build("skewbald_chicken"));
-    public static final RegistryObject<EntityType<GenericChickenEntity>> STORMY_CHICKEN = ENTITIES.register("stormy_chicken", () -> EntityType.Builder.of(GenericChickenEntity::new, MobCategory.CREATURE)
-            .sized(0.4f, 0.7f)
-            .setShouldReceiveVelocityUpdates(false)
-            .build("stormy_chicken"));
-    //
+            .clientTrackingRange(10)
+            .build("generic_chicken"));
 
-    // Other Chicken Registry Objects
+    public static final RegistryObject<EntityType<AmberChickenEntity>> AMBER_CHICKEN = ENTITIES.register("amber_chicken", () -> EntityType.Builder.of(AmberChickenEntity::new, MobCategory.CREATURE)
+            .sized(0.4f, 0.7f)
+            .setShouldReceiveVelocityUpdates(false)
+            .clientTrackingRange(10)
+            .build("amber_chicken"));
+
     public static final RegistryObject<EntityType<CluckshroomEntity>> CLUCKSHROOM = ENTITIES.register("cluckshroom", () -> EntityType.Builder.of(CluckshroomEntity::new, MobCategory.CREATURE)
             .sized(0.4f, 0.7f)
             .setShouldReceiveVelocityUpdates(false)
+            .clientTrackingRange(10)
             .build("cluckshroom"));
     public static final RegistryObject<EntityType<FancyChickenEntity>> FANCY_CHICKEN = ENTITIES.register("fancy_chicken", () -> EntityType.Builder.of(FancyChickenEntity::new, MobCategory.CREATURE)
             .sized(0.4f, 0.7f)
             .setShouldReceiveVelocityUpdates(false)
+            .clientTrackingRange(10)
             .build("fancy_chicken"));
     //
 
-    // Unique Cow Registry Objects
-    public static final RegistryObject<EntityType<GenericCowEntity>> ALBINO_COW = ENTITIES.register("albino_cow", () -> EntityType.Builder.of(GenericCowEntity::new, MobCategory.CREATURE)
+    // Cow Registry Objects
+    public static final RegistryObject<EntityType<GenericCowEntity>> GENERIC_COW = ENTITIES.register("generic_cow", () -> EntityType.Builder.of(GenericCowEntity::new, MobCategory.CREATURE)
             .sized(0.9f, 1.4f)
             .setShouldReceiveVelocityUpdates(false)
-            .build("albino_cow"));
-    public static final RegistryObject<EntityType<GenericCowEntity>> ASHEN_COW = ENTITIES.register("ashen_cow", () -> EntityType.Builder.of(GenericCowEntity::new, MobCategory.CREATURE)
-            .sized(0.9f, 1.4f)
-            .setShouldReceiveVelocityUpdates(false)
-            .build("ashen_cow"));
-    public static final RegistryObject<EntityType<GenericCowEntity>> COOKIE_COW = ENTITIES.register("cookie_cow", () -> EntityType.Builder.of(GenericCowEntity::new, MobCategory.CREATURE)
-            .sized(0.9f, 1.4f)
-            .setShouldReceiveVelocityUpdates(false)
-            .build("cookie_cow"));
-    public static final RegistryObject<EntityType<GenericCowEntity>> PINTO_COW = ENTITIES.register("pinto_cow", () -> EntityType.Builder.of(GenericCowEntity::new, MobCategory.CREATURE)
-            .sized(0.9f, 1.4f)
-            .setShouldReceiveVelocityUpdates(false)
-            .build("pinto_cow"));
-    public static final RegistryObject<EntityType<GenericCowEntity>> SUNSET_COW = ENTITIES.register("sunset_cow", () -> EntityType.Builder.of(GenericCowEntity::new, MobCategory.CREATURE)
-            .sized(0.9f, 1.4f)
-            .setShouldReceiveVelocityUpdates(false)
-            .build("sunset_cow"));
+            .clientTrackingRange(10)
+            .build("generic_cow"));
     //
 
-    // Generic Cow Registry Objects
-    public static final RegistryObject<EntityType<GenericCowEntity>> CREAM_COW = ENTITIES.register("cream_cow", () -> EntityType.Builder.of(GenericCowEntity::new, MobCategory.CREATURE)
-            .sized(0.9f, 1.4f)
-            .setShouldReceiveVelocityUpdates(false)
-            .build("cream_cow"));
-    public static final RegistryObject<EntityType<GenericCowEntity>> DAIRY_COW = ENTITIES.register("dairy_cow", () -> EntityType.Builder.of(GenericCowEntity::new, MobCategory.CREATURE)
-            .sized(0.9f, 1.4f)
-            .setShouldReceiveVelocityUpdates(false)
-            .build("dairy_cow"));
-    //
-
-    // Flower Cow Registry Objects
+    // FlowerCow Registry Objects
     public static final RegistryObject<EntityType<MoobloomEntity>> MOOBLOOM = ENTITIES.register("moobloom", () -> EntityType.Builder.of(MoobloomEntity::new, MobCategory.CREATURE)
             .sized(0.9f, 1.4f)
             .setShouldReceiveVelocityUpdates(false)
@@ -303,12 +260,7 @@ public class Registration {
     private static void registerEntitySpawnRestrictions() {
 
         // Chickens
-        SpawnPlacements.register(AMBER_CHICKEN.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules);
-        SpawnPlacements.register(BRONZED_CHICKEN.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules);
-        SpawnPlacements.register(GOLD_CRESTED_CHICKEN.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules);
-        SpawnPlacements.register(MIDNIGHT_CHICKEN.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules);
-        SpawnPlacements.register(SKEWBALD_CHICKEN.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules);
-        SpawnPlacements.register(STORMY_CHICKEN.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules);
+        SpawnPlacements.register(GENERIC_CHICKEN.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules);
 
         SpawnPlacements.register(CLUCKSHROOM.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules);
 
@@ -316,13 +268,7 @@ public class Registration {
         //
 
         // Cows
-        SpawnPlacements.register(ALBINO_COW.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules);
-        SpawnPlacements.register(ASHEN_COW.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules);
-        SpawnPlacements.register(COOKIE_COW.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules);
-        SpawnPlacements.register(CREAM_COW.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules);
-        SpawnPlacements.register(DAIRY_COW.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules);
-        SpawnPlacements.register(PINTO_COW.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules);
-        SpawnPlacements.register(SUNSET_COW.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules);
+        SpawnPlacements.register(GENERIC_COW.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules);
 
         SpawnPlacements.register(MOOBLOOM.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules);
         SpawnPlacements.register(MOOLIP.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Animal::checkAnimalSpawnRules);

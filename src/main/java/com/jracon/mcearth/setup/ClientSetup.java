@@ -35,8 +35,8 @@ import static com.jracon.mcearth.MCEarth.MOD_ID;
 public class ClientSetup {
 
     public static void init(FMLClientSetupEvent event) {
-        ItemBlockRenderTypes.setRenderLayer(Registration.SOURCE_MUD_FLUID.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(Registration.FLOWING_MUD_FLUID.get(), RenderType.translucent());
+        ItemBlockRenderTypes.setRenderLayer(Registration.SOURCE_MUD_FLUID.get(), RenderType.solid());
+        ItemBlockRenderTypes.setRenderLayer(Registration.FLOWING_MUD_FLUID.get(), RenderType.solid());
         MCEInteractionInformations.init();
     }
 
@@ -44,26 +44,15 @@ public class ClientSetup {
     public static void onRegisterLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
 
         // Chickens
-        event.registerLayerDefinition(new ModelLayerLocation(new ResourceLocation("mcearth", "amber_chicken"), "main"), ChickenModel::createBodyLayer);
-        event.registerLayerDefinition(new ModelLayerLocation(new ResourceLocation("mcearth", "bronzed_chicken"), "main"), ChickenModel::createBodyLayer);
-        event.registerLayerDefinition(new ModelLayerLocation(new ResourceLocation("mcearth", "gold_crested_chicken"), "main"), ChickenModel::createBodyLayer);
-        event.registerLayerDefinition(new ModelLayerLocation(new ResourceLocation("mcearth", "midnight_chicken"), "main"), ChickenModel::createBodyLayer);
-        event.registerLayerDefinition(new ModelLayerLocation(new ResourceLocation("mcearth", "skewbald_chicken"), "main"), ChickenModel::createBodyLayer);
-        event.registerLayerDefinition(new ModelLayerLocation(new ResourceLocation("mcearth", "stormy_chicken"), "main"), ChickenModel::createBodyLayer);
+        event.registerLayerDefinition(new ModelLayerLocation(new ResourceLocation("mcearth", "generic_chicken"), "main"), ChickenModel::createBodyLayer);
 
         event.registerLayerDefinition(CluckshroomModel.LAYER_LOCATION, CluckshroomModel::createBodyLayer);
         event.registerLayerDefinition(FancyChickenModel.LAYER_LOCATION, FancyChickenModel::createBodyLayer);
         //
 
         // Cows
-        event.registerLayerDefinition(new ModelLayerLocation(new ResourceLocation("mcearth", "albino_cow"), "main"), UniqueCowModel::createBodyLayer);
-        event.registerLayerDefinition(new ModelLayerLocation(new ResourceLocation("mcearth", "ashen_cow"), "main"), UniqueCowModel::createBodyLayer);
-        event.registerLayerDefinition(new ModelLayerLocation(new ResourceLocation("mcearth", "cookie_cow"), "main"), UniqueCowModel::createBodyLayer);
-        event.registerLayerDefinition(new ModelLayerLocation(new ResourceLocation("mcearth", "pinto_cow"), "main"), UniqueCowModel::createBodyLayer);
-        event.registerLayerDefinition(new ModelLayerLocation(new ResourceLocation("mcearth", "sunset_cow"), "main"), UniqueCowModel::createBodyLayer);
-
-        event.registerLayerDefinition(new ModelLayerLocation(new ResourceLocation("mcearth", "cream_cow"), "main"), CowModel::createBodyLayer);
-        event.registerLayerDefinition(new ModelLayerLocation(new ResourceLocation("mcearth", "dairy_cow"), "main"), CowModel::createBodyLayer);
+        event.registerLayerDefinition(new ModelLayerLocation(new ResourceLocation("mcearth", "generic_cow"), "main"), CowModel::createBodyLayer);
+        event.registerLayerDefinition(new ModelLayerLocation(new ResourceLocation("mcearth", "generic_cow_unique"), "main"), UniqueCowModel::createBodyLayer);
 
         event.registerLayerDefinition(MoobloomModel.LAYER_LOCATION, MoobloomModel::createBodyLayer);
         event.registerLayerDefinition(MoolipModel.LAYER_LOCATION, MoolipModel::createBodyLayer);
@@ -96,26 +85,16 @@ public class ClientSetup {
     public static void onRegisterRenderer(EntityRenderersEvent.RegisterRenderers event) {
 
         // Chickens
+        event.registerEntityRenderer(Registration.GENERIC_CHICKEN.get(), GenericChickenRenderer::new);
+
         event.registerEntityRenderer(Registration.AMBER_CHICKEN.get(), AmberChickenRenderer::new);
-        event.registerEntityRenderer(Registration.BRONZED_CHICKEN.get(), BronzedChickenRenderer::new);
-        event.registerEntityRenderer(Registration.GOLD_CRESTED_CHICKEN.get(), GoldCrestedChickenRenderer::new);
-        event.registerEntityRenderer(Registration.MIDNIGHT_CHICKEN.get(), MidnightChickenRenderer::new);
-        event.registerEntityRenderer(Registration.SKEWBALD_CHICKEN.get(), SkewbaldChickenRenderer::new);
-        event.registerEntityRenderer(Registration.STORMY_CHICKEN.get(), StormyChickenRenderer::new);
 
         event.registerEntityRenderer(Registration.CLUCKSHROOM.get(), CluckshroomRenderer::new);
         event.registerEntityRenderer(Registration.FANCY_CHICKEN.get(), FancyChickenRenderer::new);
         //
 
         // Cows
-        event.registerEntityRenderer(Registration.ALBINO_COW.get(), AlbinoCowRenderer::new);
-        event.registerEntityRenderer(Registration.ASHEN_COW.get(), AshenCowRenderer::new);
-        event.registerEntityRenderer(Registration.COOKIE_COW.get(), CookieCowRenderer::new);
-        event.registerEntityRenderer(Registration.PINTO_COW.get(), PintoCowRenderer::new);
-        event.registerEntityRenderer(Registration.SUNSET_COW.get(), SunsetCowRenderer::new);
-
-        event.registerEntityRenderer(Registration.CREAM_COW.get(), CreamCowRenderer::new);
-        event.registerEntityRenderer(Registration.DAIRY_COW.get(), DairyCowRenderer::new);
+        //event.registerEntityRenderer(Registration.GENERIC_COW.get(), GenericCowRenderer::new);
 
         event.registerEntityRenderer(Registration.MOOBLOOM.get(), MoobloomRenderer::new);
         event.registerEntityRenderer(Registration.MOOLIP.get(), MoolipRenderer::new);
